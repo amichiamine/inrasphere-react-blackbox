@@ -1,5 +1,10 @@
+"use strict";
+var __create = Object.create;
 var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __esm = (fn, res) => function __init() {
   return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
 };
@@ -7,6 +12,22 @@ var __export = (target, all) => {
   for (var name in all)
     __defProp(target, name, { get: all[name], enumerable: true });
 };
+var __copyProps = (to, from, except, desc2) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc2 = __getOwnPropDesc(from, key)) || desc2.enumerable });
+  }
+  return to;
+};
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
 
 // server/testData.ts
 var testData_exports = {};
@@ -362,18 +383,18 @@ var auth_exports = {};
 __export(auth_exports, {
   AuthService: () => AuthService
 });
-import bcrypt from "bcrypt";
-var SALT_ROUNDS, AuthService;
+var import_bcrypt, SALT_ROUNDS, AuthService;
 var init_auth = __esm({
   "server/services/auth.ts"() {
     "use strict";
+    import_bcrypt = __toESM(require("bcrypt"), 1);
     SALT_ROUNDS = 12;
     AuthService = class {
       /**
        * Hash a password using bcrypt
        */
       static async hashPassword(password) {
-        return bcrypt.hash(password, SALT_ROUNDS);
+        return import_bcrypt.default.hash(password, SALT_ROUNDS);
       }
       /**
        * Verify a password against a hash
@@ -382,7 +403,7 @@ var init_auth = __esm({
         if (!hash || !hash.startsWith("$2")) {
           return password === hash;
         }
-        return bcrypt.compare(password, hash);
+        return import_bcrypt.default.compare(password, hash);
       }
       /**
        * Validate password strength
@@ -414,22 +435,22 @@ var init_auth = __esm({
 });
 
 // server/index.ts
-import express2 from "express";
-import session from "express-session";
+var import_express2 = __toESM(require("express"), 1);
+var import_express_session = __toESM(require("express-session"), 1);
 
 // server/routes/index.ts
-import { createServer } from "http";
+var import_http = require("http");
 
 // server/data/storage.ts
-import { randomUUID as randomUUID2 } from "crypto";
+var import_crypto2 = require("crypto");
 
 // server/data/storage-drizzle.ts
-import { randomUUID } from "crypto";
-import { eq, desc, asc, sql as sql2 } from "drizzle-orm";
+var import_crypto = require("crypto");
+var import_drizzle_orm2 = require("drizzle-orm");
 
 // server/db-mysql.ts
-import mysql from "mysql2/promise";
-import { drizzle } from "drizzle-orm/mysql2";
+var import_promise = __toESM(require("mysql2/promise"), 1);
+var import_mysql2 = require("drizzle-orm/mysql2");
 
 // shared/schema-mysql.ts
 var schema_mysql_exports = {};
@@ -456,191 +477,182 @@ __export(schema_mysql_exports, {
   userPermissions: () => userPermissions,
   users: () => users
 });
-import { sql } from "drizzle-orm";
-import {
-  mysqlTable,
-  varchar,
-  text,
-  timestamp,
-  boolean,
-  int,
-  decimal,
-  mysqlEnum
-} from "drizzle-orm/mysql-core";
-import { createInsertSchema } from "drizzle-zod";
-var users = mysqlTable("users", {
-  id: varchar("id", { length: 50 }).primaryKey(),
-  username: text("username").notNull().unique(),
-  password: text("password").notNull(),
-  name: text("name").notNull(),
-  role: mysqlEnum("role", ["employee", "admin", "moderator"]).default("employee"),
-  avatar: text("avatar"),
+var import_drizzle_orm = require("drizzle-orm");
+var import_mysql_core = require("drizzle-orm/mysql-core");
+var import_drizzle_zod = require("drizzle-zod");
+var users = (0, import_mysql_core.mysqlTable)("users", {
+  id: (0, import_mysql_core.varchar)("id", { length: 50 }).primaryKey(),
+  username: (0, import_mysql_core.text)("username").notNull().unique(),
+  password: (0, import_mysql_core.text)("password").notNull(),
+  name: (0, import_mysql_core.text)("name").notNull(),
+  role: (0, import_mysql_core.mysqlEnum)("role", ["employee", "admin", "moderator"]).default("employee"),
+  avatar: (0, import_mysql_core.text)("avatar"),
   // Extended fields for employee management
-  employeeId: varchar("employee_id", { length: 50 }).unique(),
-  department: varchar("department", { length: 255 }),
-  position: varchar("position", { length: 255 }),
-  isActive: boolean("is_active").default(true),
-  phone: varchar("phone", { length: 50 }),
-  email: varchar("email", { length: 255 }),
-  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
-  updatedAt: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`)
+  employeeId: (0, import_mysql_core.varchar)("employee_id", { length: 50 }).unique(),
+  department: (0, import_mysql_core.varchar)("department", { length: 255 }),
+  position: (0, import_mysql_core.varchar)("position", { length: 255 }),
+  isActive: (0, import_mysql_core.boolean)("is_active").default(true),
+  phone: (0, import_mysql_core.varchar)("phone", { length: 50 }),
+  email: (0, import_mysql_core.varchar)("email", { length: 255 }),
+  createdAt: (0, import_mysql_core.timestamp)("created_at").default(import_drizzle_orm.sql`CURRENT_TIMESTAMP`),
+  updatedAt: (0, import_mysql_core.timestamp)("updated_at").default(import_drizzle_orm.sql`CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`)
 });
-var announcements = mysqlTable("announcements", {
-  id: varchar("id", { length: 50 }).primaryKey(),
-  title: text("title").notNull(),
-  content: text("content").notNull(),
-  type: mysqlEnum("type", ["info", "important", "event", "formation"]).default("info"),
-  authorId: varchar("author_id", { length: 50 }),
-  authorName: text("author_name").notNull(),
-  imageUrl: text("image_url"),
-  icon: varchar("icon", { length: 10 }).default("\u{1F4E2}"),
-  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`).notNull(),
-  isImportant: boolean("is_important").default(false)
+var announcements = (0, import_mysql_core.mysqlTable)("announcements", {
+  id: (0, import_mysql_core.varchar)("id", { length: 50 }).primaryKey(),
+  title: (0, import_mysql_core.text)("title").notNull(),
+  content: (0, import_mysql_core.text)("content").notNull(),
+  type: (0, import_mysql_core.mysqlEnum)("type", ["info", "important", "event", "formation"]).default("info"),
+  authorId: (0, import_mysql_core.varchar)("author_id", { length: 50 }),
+  authorName: (0, import_mysql_core.text)("author_name").notNull(),
+  imageUrl: (0, import_mysql_core.text)("image_url"),
+  icon: (0, import_mysql_core.varchar)("icon", { length: 10 }).default("\u{1F4E2}"),
+  createdAt: (0, import_mysql_core.timestamp)("created_at").default(import_drizzle_orm.sql`CURRENT_TIMESTAMP`).notNull(),
+  isImportant: (0, import_mysql_core.boolean)("is_important").default(false)
 });
-var documents = mysqlTable("documents", {
-  id: varchar("id", { length: 50 }).primaryKey(),
-  title: text("title").notNull(),
-  description: text("description"),
-  category: mysqlEnum("category", ["regulation", "policy", "guide", "procedure"]).notNull(),
-  fileName: text("file_name").notNull(),
-  fileUrl: text("file_url").notNull(),
-  updatedAt: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`).notNull(),
-  version: varchar("version", { length: 20 }).default("1.0")
+var documents = (0, import_mysql_core.mysqlTable)("documents", {
+  id: (0, import_mysql_core.varchar)("id", { length: 50 }).primaryKey(),
+  title: (0, import_mysql_core.text)("title").notNull(),
+  description: (0, import_mysql_core.text)("description"),
+  category: (0, import_mysql_core.mysqlEnum)("category", ["regulation", "policy", "guide", "procedure"]).notNull(),
+  fileName: (0, import_mysql_core.text)("file_name").notNull(),
+  fileUrl: (0, import_mysql_core.text)("file_url").notNull(),
+  updatedAt: (0, import_mysql_core.timestamp)("updated_at").default(import_drizzle_orm.sql`CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`).notNull(),
+  version: (0, import_mysql_core.varchar)("version", { length: 20 }).default("1.0")
 });
-var events = mysqlTable("events", {
-  id: varchar("id", { length: 50 }).primaryKey(),
-  title: text("title").notNull(),
-  description: text("description"),
-  date: timestamp("date").notNull(),
-  location: text("location"),
-  type: mysqlEnum("type", ["meeting", "training", "social", "other"]).default("meeting"),
-  organizerId: varchar("organizer_id", { length: 50 }),
-  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`)
+var events = (0, import_mysql_core.mysqlTable)("events", {
+  id: (0, import_mysql_core.varchar)("id", { length: 50 }).primaryKey(),
+  title: (0, import_mysql_core.text)("title").notNull(),
+  description: (0, import_mysql_core.text)("description"),
+  date: (0, import_mysql_core.timestamp)("date").notNull(),
+  location: (0, import_mysql_core.text)("location"),
+  type: (0, import_mysql_core.mysqlEnum)("type", ["meeting", "training", "social", "other"]).default("meeting"),
+  organizerId: (0, import_mysql_core.varchar)("organizer_id", { length: 50 }),
+  createdAt: (0, import_mysql_core.timestamp)("created_at").default(import_drizzle_orm.sql`CURRENT_TIMESTAMP`)
 });
-var messages = mysqlTable("messages", {
-  id: varchar("id", { length: 50 }).primaryKey(),
-  senderId: varchar("sender_id", { length: 50 }).notNull(),
-  recipientId: varchar("recipient_id", { length: 50 }).notNull(),
-  subject: text("subject").notNull(),
-  content: text("content").notNull(),
-  isRead: boolean("is_read").default(false),
-  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`)
+var messages = (0, import_mysql_core.mysqlTable)("messages", {
+  id: (0, import_mysql_core.varchar)("id", { length: 50 }).primaryKey(),
+  senderId: (0, import_mysql_core.varchar)("sender_id", { length: 50 }).notNull(),
+  recipientId: (0, import_mysql_core.varchar)("recipient_id", { length: 50 }).notNull(),
+  subject: (0, import_mysql_core.text)("subject").notNull(),
+  content: (0, import_mysql_core.text)("content").notNull(),
+  isRead: (0, import_mysql_core.boolean)("is_read").default(false),
+  createdAt: (0, import_mysql_core.timestamp)("created_at").default(import_drizzle_orm.sql`CURRENT_TIMESTAMP`)
 });
-var complaints = mysqlTable("complaints", {
-  id: varchar("id", { length: 50 }).primaryKey(),
-  submitterId: varchar("submitter_id", { length: 50 }).notNull(),
-  assignedToId: varchar("assigned_to_id", { length: 50 }),
-  title: text("title").notNull(),
-  description: text("description").notNull(),
-  type: mysqlEnum("type", ["complaint", "suggestion", "technical", "hr", "other"]).default("complaint"),
-  priority: mysqlEnum("priority", ["low", "medium", "high", "urgent"]).default("medium"),
-  status: mysqlEnum("status", ["open", "in_progress", "resolved", "closed"]).default("open"),
-  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
-  updatedAt: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`)
+var complaints = (0, import_mysql_core.mysqlTable)("complaints", {
+  id: (0, import_mysql_core.varchar)("id", { length: 50 }).primaryKey(),
+  submitterId: (0, import_mysql_core.varchar)("submitter_id", { length: 50 }).notNull(),
+  assignedToId: (0, import_mysql_core.varchar)("assigned_to_id", { length: 50 }),
+  title: (0, import_mysql_core.text)("title").notNull(),
+  description: (0, import_mysql_core.text)("description").notNull(),
+  type: (0, import_mysql_core.mysqlEnum)("type", ["complaint", "suggestion", "technical", "hr", "other"]).default("complaint"),
+  priority: (0, import_mysql_core.mysqlEnum)("priority", ["low", "medium", "high", "urgent"]).default("medium"),
+  status: (0, import_mysql_core.mysqlEnum)("status", ["open", "in_progress", "resolved", "closed"]).default("open"),
+  createdAt: (0, import_mysql_core.timestamp)("created_at").default(import_drizzle_orm.sql`CURRENT_TIMESTAMP`),
+  updatedAt: (0, import_mysql_core.timestamp)("updated_at").default(import_drizzle_orm.sql`CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`)
 });
-var trainings = mysqlTable("trainings", {
-  id: varchar("id", { length: 50 }).primaryKey(),
-  title: text("title").notNull(),
-  description: text("description"),
-  category: varchar("category", { length: 100 }),
-  difficulty: mysqlEnum("difficulty", ["beginner", "intermediate", "advanced"]).default("beginner"),
-  duration: int("duration"),
+var trainings = (0, import_mysql_core.mysqlTable)("trainings", {
+  id: (0, import_mysql_core.varchar)("id", { length: 50 }).primaryKey(),
+  title: (0, import_mysql_core.text)("title").notNull(),
+  description: (0, import_mysql_core.text)("description"),
+  category: (0, import_mysql_core.varchar)("category", { length: 100 }),
+  difficulty: (0, import_mysql_core.mysqlEnum)("difficulty", ["beginner", "intermediate", "advanced"]).default("beginner"),
+  duration: (0, import_mysql_core.int)("duration"),
   // minutes
-  instructorId: varchar("instructor_id", { length: 50 }),
-  isActive: boolean("is_active").default(true),
-  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
-  updatedAt: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`)
+  instructorId: (0, import_mysql_core.varchar)("instructor_id", { length: 50 }),
+  isActive: (0, import_mysql_core.boolean)("is_active").default(true),
+  createdAt: (0, import_mysql_core.timestamp)("created_at").default(import_drizzle_orm.sql`CURRENT_TIMESTAMP`),
+  updatedAt: (0, import_mysql_core.timestamp)("updated_at").default(import_drizzle_orm.sql`CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`)
 });
-var trainingEnrollments = mysqlTable("training_enrollments", {
-  id: varchar("id", { length: 50 }).primaryKey(),
-  userId: varchar("user_id", { length: 50 }).notNull(),
-  trainingId: varchar("training_id", { length: 50 }).notNull(),
-  status: mysqlEnum("status", ["enrolled", "in_progress", "completed", "dropped"]).default("enrolled"),
-  progress: decimal("progress", { precision: 5, scale: 2 }).default("0.00"),
+var trainingEnrollments = (0, import_mysql_core.mysqlTable)("training_enrollments", {
+  id: (0, import_mysql_core.varchar)("id", { length: 50 }).primaryKey(),
+  userId: (0, import_mysql_core.varchar)("user_id", { length: 50 }).notNull(),
+  trainingId: (0, import_mysql_core.varchar)("training_id", { length: 50 }).notNull(),
+  status: (0, import_mysql_core.mysqlEnum)("status", ["enrolled", "in_progress", "completed", "dropped"]).default("enrolled"),
+  progress: (0, import_mysql_core.decimal)("progress", { precision: 5, scale: 2 }).default("0.00"),
   // 0-100%
-  completedAt: timestamp("completed_at"),
-  enrolledAt: timestamp("enrolled_at").default(sql`CURRENT_TIMESTAMP`)
+  completedAt: (0, import_mysql_core.timestamp)("completed_at"),
+  enrolledAt: (0, import_mysql_core.timestamp)("enrolled_at").default(import_drizzle_orm.sql`CURRENT_TIMESTAMP`)
 });
-var forumCategories = mysqlTable("forum_categories", {
-  id: varchar("id", { length: 50 }).primaryKey(),
-  name: varchar("name", { length: 255 }).notNull(),
-  description: text("description"),
-  color: varchar("color", { length: 7 }).default("#8B5CF6"),
-  isActive: boolean("is_active").default(true),
-  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`)
+var forumCategories = (0, import_mysql_core.mysqlTable)("forum_categories", {
+  id: (0, import_mysql_core.varchar)("id", { length: 50 }).primaryKey(),
+  name: (0, import_mysql_core.varchar)("name", { length: 255 }).notNull(),
+  description: (0, import_mysql_core.text)("description"),
+  color: (0, import_mysql_core.varchar)("color", { length: 7 }).default("#8B5CF6"),
+  isActive: (0, import_mysql_core.boolean)("is_active").default(true),
+  createdAt: (0, import_mysql_core.timestamp)("created_at").default(import_drizzle_orm.sql`CURRENT_TIMESTAMP`)
 });
-var forumTopics = mysqlTable("forum_topics", {
-  id: varchar("id", { length: 50 }).primaryKey(),
-  categoryId: varchar("category_id", { length: 50 }).notNull(),
-  title: varchar("title", { length: 255 }).notNull(),
-  content: text("content").notNull(),
-  authorId: varchar("author_id", { length: 50 }).notNull(),
-  isPinned: boolean("is_pinned").default(false),
-  isLocked: boolean("is_locked").default(false),
-  viewCount: int("view_count").default(0),
-  replyCount: int("reply_count").default(0),
-  lastReplyAt: timestamp("last_reply_at"),
-  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`)
+var forumTopics = (0, import_mysql_core.mysqlTable)("forum_topics", {
+  id: (0, import_mysql_core.varchar)("id", { length: 50 }).primaryKey(),
+  categoryId: (0, import_mysql_core.varchar)("category_id", { length: 50 }).notNull(),
+  title: (0, import_mysql_core.varchar)("title", { length: 255 }).notNull(),
+  content: (0, import_mysql_core.text)("content").notNull(),
+  authorId: (0, import_mysql_core.varchar)("author_id", { length: 50 }).notNull(),
+  isPinned: (0, import_mysql_core.boolean)("is_pinned").default(false),
+  isLocked: (0, import_mysql_core.boolean)("is_locked").default(false),
+  viewCount: (0, import_mysql_core.int)("view_count").default(0),
+  replyCount: (0, import_mysql_core.int)("reply_count").default(0),
+  lastReplyAt: (0, import_mysql_core.timestamp)("last_reply_at"),
+  createdAt: (0, import_mysql_core.timestamp)("created_at").default(import_drizzle_orm.sql`CURRENT_TIMESTAMP`)
 });
-var forumPosts = mysqlTable("forum_posts", {
-  id: varchar("id", { length: 50 }).primaryKey(),
-  topicId: varchar("topic_id", { length: 50 }).notNull(),
-  authorId: varchar("author_id", { length: 50 }).notNull(),
-  content: text("content").notNull(),
-  isEdited: boolean("is_edited").default(false),
-  editedAt: timestamp("edited_at"),
-  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`)
+var forumPosts = (0, import_mysql_core.mysqlTable)("forum_posts", {
+  id: (0, import_mysql_core.varchar)("id", { length: 50 }).primaryKey(),
+  topicId: (0, import_mysql_core.varchar)("topic_id", { length: 50 }).notNull(),
+  authorId: (0, import_mysql_core.varchar)("author_id", { length: 50 }).notNull(),
+  content: (0, import_mysql_core.text)("content").notNull(),
+  isEdited: (0, import_mysql_core.boolean)("is_edited").default(false),
+  editedAt: (0, import_mysql_core.timestamp)("edited_at"),
+  createdAt: (0, import_mysql_core.timestamp)("created_at").default(import_drizzle_orm.sql`CURRENT_TIMESTAMP`)
 });
-var forumLikes = mysqlTable("forum_likes", {
-  id: varchar("id", { length: 50 }).primaryKey(),
-  userId: varchar("user_id", { length: 50 }).notNull(),
-  postId: varchar("post_id", { length: 50 }).notNull(),
-  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`)
+var forumLikes = (0, import_mysql_core.mysqlTable)("forum_likes", {
+  id: (0, import_mysql_core.varchar)("id", { length: 50 }).primaryKey(),
+  userId: (0, import_mysql_core.varchar)("user_id", { length: 50 }).notNull(),
+  postId: (0, import_mysql_core.varchar)("post_id", { length: 50 }).notNull(),
+  createdAt: (0, import_mysql_core.timestamp)("created_at").default(import_drizzle_orm.sql`CURRENT_TIMESTAMP`)
 });
-var permissions = mysqlTable("permissions", {
-  id: varchar("id", { length: 50 }).primaryKey(),
-  name: varchar("name", { length: 255 }).notNull().unique(),
-  description: text("description"),
-  module: varchar("module", { length: 100 }),
+var permissions = (0, import_mysql_core.mysqlTable)("permissions", {
+  id: (0, import_mysql_core.varchar)("id", { length: 50 }).primaryKey(),
+  name: (0, import_mysql_core.varchar)("name", { length: 255 }).notNull().unique(),
+  description: (0, import_mysql_core.text)("description"),
+  module: (0, import_mysql_core.varchar)("module", { length: 100 }),
   // auth, content, messaging, training, admin
-  action: varchar("action", { length: 100 }),
+  action: (0, import_mysql_core.varchar)("action", { length: 100 }),
   // read, write, delete, manage
-  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`)
+  createdAt: (0, import_mysql_core.timestamp)("created_at").default(import_drizzle_orm.sql`CURRENT_TIMESTAMP`)
 });
-var userPermissions = mysqlTable("user_permissions", {
-  id: varchar("id", { length: 50 }).primaryKey(),
-  userId: varchar("user_id", { length: 50 }).notNull(),
-  permissionId: varchar("permission_id", { length: 50 }).notNull(),
-  grantedAt: timestamp("granted_at").default(sql`CURRENT_TIMESTAMP`),
-  grantedBy: varchar("granted_by", { length: 50 })
+var userPermissions = (0, import_mysql_core.mysqlTable)("user_permissions", {
+  id: (0, import_mysql_core.varchar)("id", { length: 50 }).primaryKey(),
+  userId: (0, import_mysql_core.varchar)("user_id", { length: 50 }).notNull(),
+  permissionId: (0, import_mysql_core.varchar)("permission_id", { length: 50 }).notNull(),
+  grantedAt: (0, import_mysql_core.timestamp)("granted_at").default(import_drizzle_orm.sql`CURRENT_TIMESTAMP`),
+  grantedBy: (0, import_mysql_core.varchar)("granted_by", { length: 50 })
 });
-var insertUserSchema = createInsertSchema(users).omit({
+var insertUserSchema = (0, import_drizzle_zod.createInsertSchema)(users).omit({
   id: true,
   createdAt: true,
   updatedAt: true
 });
-var insertAnnouncementSchema = createInsertSchema(announcements).omit({
+var insertAnnouncementSchema = (0, import_drizzle_zod.createInsertSchema)(announcements).omit({
   id: true,
   createdAt: true
 });
-var insertDocumentSchema = createInsertSchema(documents).omit({
+var insertDocumentSchema = (0, import_drizzle_zod.createInsertSchema)(documents).omit({
   id: true,
   updatedAt: true
 });
-var insertEventSchema = createInsertSchema(events).omit({
+var insertEventSchema = (0, import_drizzle_zod.createInsertSchema)(events).omit({
   id: true,
   createdAt: true
 });
-var insertMessageSchema = createInsertSchema(messages).omit({
+var insertMessageSchema = (0, import_drizzle_zod.createInsertSchema)(messages).omit({
   id: true,
   createdAt: true
 });
-var insertComplaintSchema = createInsertSchema(complaints).omit({
+var insertComplaintSchema = (0, import_drizzle_zod.createInsertSchema)(complaints).omit({
   id: true,
   createdAt: true,
   updatedAt: true
 });
-var insertTrainingSchema = createInsertSchema(trainings).omit({
+var insertTrainingSchema = (0, import_drizzle_zod.createInsertSchema)(trainings).omit({
   id: true,
   createdAt: true,
   updatedAt: true
@@ -658,8 +670,8 @@ var mysqlConfig = {
   } : void 0,
   charset: "utf8mb4"
 };
-var mysqlConnection = mysql.createPool(mysqlConfig);
-var mysqlDb = drizzle(mysqlConnection, {
+var mysqlConnection = import_promise.default.createPool(mysqlConfig);
+var mysqlDb = (0, import_mysql2.drizzle)(mysqlConnection, {
   schema: schema_mysql_exports,
   mode: "default"
 });
@@ -676,22 +688,22 @@ var DrizzleStorage = class {
   // --- Users ---
   async getUser(id) {
     this.ensureMySQL();
-    const rows = await db.select().from(users).where(eq(users.id, id)).limit(1);
+    const rows = await db.select().from(users).where((0, import_drizzle_orm2.eq)(users.id, id)).limit(1);
     return rows[0];
   }
   async getUserByUsername(username) {
     this.ensureMySQL();
-    const rows = await db.select().from(users).where(eq(users.username, username)).limit(1);
+    const rows = await db.select().from(users).where((0, import_drizzle_orm2.eq)(users.username, username)).limit(1);
     return rows[0];
   }
   async getUserByEmployeeId(employeeId) {
     this.ensureMySQL();
-    const rows = await db.select().from(users).where(eq(users.employeeId, employeeId)).limit(1);
+    const rows = await db.select().from(users).where((0, import_drizzle_orm2.eq)(users.employeeId, employeeId)).limit(1);
     return rows[0];
   }
   async createUser(user) {
     this.ensureMySQL();
-    const id = randomUUID();
+    const id = (0, import_crypto.randomUUID)();
     await db.insert(users).values({
       id,
       username: user.username,
@@ -724,30 +736,30 @@ var DrizzleStorage = class {
       isActive: updates.isActive,
       phone: updates.phone,
       email: updates.email
-    }).where(eq(users.id, id));
+    }).where((0, import_drizzle_orm2.eq)(users.id, id));
     const updated = await this.getUser(id);
     if (!updated) throw new Error("User not found after update");
     return updated;
   }
   async getUsers() {
     this.ensureMySQL();
-    const rows = await db.select().from(users).where(eq(users.isActive, true));
+    const rows = await db.select().from(users).where((0, import_drizzle_orm2.eq)(users.isActive, true));
     return rows;
   }
   // --- Announcements ---
   async getAnnouncements() {
     this.ensureMySQL();
-    const rows = await db.select().from(announcements).orderBy(desc(announcements.createdAt));
+    const rows = await db.select().from(announcements).orderBy((0, import_drizzle_orm2.desc)(announcements.createdAt));
     return rows;
   }
   async getAnnouncementById(id) {
     this.ensureMySQL();
-    const rows = await db.select().from(announcements).where(eq(announcements.id, id)).limit(1);
+    const rows = await db.select().from(announcements).where((0, import_drizzle_orm2.eq)(announcements.id, id)).limit(1);
     return rows[0];
   }
   async createAnnouncement(announcement) {
     this.ensureMySQL();
-    const id = randomUUID();
+    const id = (0, import_crypto.randomUUID)();
     await db.insert(announcements).values({
       id,
       title: announcement.title,
@@ -774,29 +786,29 @@ var DrizzleStorage = class {
       imageUrl: updates.imageUrl,
       icon: updates.icon,
       isImportant: updates.isImportant
-    }).where(eq(announcements.id, id));
+    }).where((0, import_drizzle_orm2.eq)(announcements.id, id));
     const updated = await this.getAnnouncementById(id);
     if (!updated) throw new Error("Announcement not found after update");
     return updated;
   }
   async deleteAnnouncement(id) {
     this.ensureMySQL();
-    await db.delete(announcements).where(eq(announcements.id, id));
+    await db.delete(announcements).where((0, import_drizzle_orm2.eq)(announcements.id, id));
   }
   // --- Documents ---
   async getDocuments() {
     this.ensureMySQL();
-    const rows = await db.select().from(documents).orderBy(desc(documents.updatedAt));
+    const rows = await db.select().from(documents).orderBy((0, import_drizzle_orm2.desc)(documents.updatedAt));
     return rows;
   }
   async getDocumentById(id) {
     this.ensureMySQL();
-    const rows = await db.select().from(documents).where(eq(documents.id, id)).limit(1);
+    const rows = await db.select().from(documents).where((0, import_drizzle_orm2.eq)(documents.id, id)).limit(1);
     return rows[0];
   }
   async createDocument(document) {
     this.ensureMySQL();
-    const id = randomUUID();
+    const id = (0, import_crypto.randomUUID)();
     await db.insert(documents).values({
       id,
       title: document.title,
@@ -819,29 +831,29 @@ var DrizzleStorage = class {
       fileName: updates.fileName,
       fileUrl: updates.fileUrl,
       version: updates.version
-    }).where(eq(documents.id, id));
+    }).where((0, import_drizzle_orm2.eq)(documents.id, id));
     const updated = await this.getDocumentById(id);
     if (!updated) throw new Error("Document not found after update");
     return updated;
   }
   async deleteDocument(id) {
     this.ensureMySQL();
-    await db.delete(documents).where(eq(documents.id, id));
+    await db.delete(documents).where((0, import_drizzle_orm2.eq)(documents.id, id));
   }
   // --- Events ---
   async getEvents() {
     this.ensureMySQL();
-    const rows = await db.select().from(events).orderBy(asc(events.date));
+    const rows = await db.select().from(events).orderBy((0, import_drizzle_orm2.asc)(events.date));
     return rows;
   }
   async getEventById(id) {
     this.ensureMySQL();
-    const rows = await db.select().from(events).where(eq(events.id, id)).limit(1);
+    const rows = await db.select().from(events).where((0, import_drizzle_orm2.eq)(events.id, id)).limit(1);
     return rows[0];
   }
   async createEvent(event) {
     this.ensureMySQL();
-    const id = randomUUID();
+    const id = (0, import_crypto.randomUUID)();
     await db.insert(events).values({
       id,
       title: event.title,
@@ -864,14 +876,14 @@ var DrizzleStorage = class {
       location: updates.location,
       type: updates.type,
       organizerId: updates.organizerId
-    }).where(eq(events.id, id));
+    }).where((0, import_drizzle_orm2.eq)(events.id, id));
     const updated = await this.getEventById(id);
     if (!updated) throw new Error("Event not found after update");
     return updated;
   }
   async deleteEvent(id) {
     this.ensureMySQL();
-    await db.delete(events).where(eq(events.id, id));
+    await db.delete(events).where((0, import_drizzle_orm2.eq)(events.id, id));
   }
   // --- Contents ---
   async getContents() {
@@ -918,10 +930,10 @@ var DrizzleStorage = class {
   // --- Stats ---
   async getStats() {
     this.ensureMySQL();
-    const [usersCount] = await db.select({ count: sql2`COUNT(*)` }).from(users);
-    const [annCount] = await db.select({ count: sql2`COUNT(*)` }).from(announcements);
-    const [docCount] = await db.select({ count: sql2`COUNT(*)` }).from(documents);
-    const [evtCount] = await db.select({ count: sql2`COUNT(*)` }).from(events);
+    const [usersCount] = await db.select({ count: import_drizzle_orm2.sql`COUNT(*)` }).from(users);
+    const [annCount] = await db.select({ count: import_drizzle_orm2.sql`COUNT(*)` }).from(announcements);
+    const [docCount] = await db.select({ count: import_drizzle_orm2.sql`COUNT(*)` }).from(documents);
+    const [evtCount] = await db.select({ count: import_drizzle_orm2.sql`COUNT(*)` }).from(events);
     return {
       totalUsers: Number(usersCount?.count || 0),
       totalAnnouncements: Number(annCount?.count || 0),
@@ -1594,7 +1606,7 @@ var MemStorage = class {
     return Array.from(this.users.values()).filter((user) => user.isActive);
   }
   async createUser(insertUser) {
-    const id = randomUUID2();
+    const id = (0, import_crypto2.randomUUID)();
     const user = {
       ...insertUser,
       id,
@@ -1629,7 +1641,7 @@ var MemStorage = class {
     return this.announcements.get(id);
   }
   async createAnnouncement(insertAnnouncement) {
-    const id = randomUUID2();
+    const id = (0, import_crypto2.randomUUID)();
     const announcement = {
       ...insertAnnouncement,
       id,
@@ -1664,7 +1676,7 @@ var MemStorage = class {
     return this.documents.get(id);
   }
   async createDocument(insertDocument) {
-    const id = randomUUID2();
+    const id = (0, import_crypto2.randomUUID)();
     const document = {
       ...insertDocument,
       id,
@@ -1695,7 +1707,7 @@ var MemStorage = class {
     return this.events.get(id);
   }
   async createEvent(insertEvent) {
-    const id = randomUUID2();
+    const id = (0, import_crypto2.randomUUID)();
     const event = {
       ...insertEvent,
       id,
@@ -1726,7 +1738,7 @@ var MemStorage = class {
     return this.messages.get(id);
   }
   async createMessage(insertMessage) {
-    const id = randomUUID2();
+    const id = (0, import_crypto2.randomUUID)();
     const message = {
       ...insertMessage,
       id,
@@ -1759,7 +1771,7 @@ var MemStorage = class {
     return Array.from(this.complaints.values()).filter((complaint) => complaint.submitterId === userId).sort((a, b) => (b.createdAt?.getTime() || 0) - (a.createdAt?.getTime() || 0));
   }
   async createComplaint(insertComplaint) {
-    const id = randomUUID2();
+    const id = (0, import_crypto2.randomUUID)();
     const complaint = {
       ...insertComplaint,
       id,
@@ -1787,7 +1799,7 @@ var MemStorage = class {
     return Array.from(this.permissions.values()).filter((permission) => permission.userId === userId);
   }
   async createPermission(insertPermission) {
-    const id = randomUUID2();
+    const id = (0, import_crypto2.randomUUID)();
     const permission = {
       ...insertPermission,
       id,
@@ -1816,7 +1828,7 @@ var MemStorage = class {
     return this.contents.get(id);
   }
   async createContent(insertContent) {
-    const id = randomUUID2();
+    const id = (0, import_crypto2.randomUUID)();
     const content = {
       ...insertContent,
       id,
@@ -1854,7 +1866,7 @@ var MemStorage = class {
     return this.categories.get(id);
   }
   async createCategory(insertCategory) {
-    const id = randomUUID2();
+    const id = (0, import_crypto2.randomUUID)();
     const category = {
       ...insertCategory,
       id,
@@ -1888,7 +1900,7 @@ var MemStorage = class {
     return this.employeeCategories.get(id);
   }
   async createEmployeeCategory(insertCategory) {
-    const id = randomUUID2();
+    const id = (0, import_crypto2.randomUUID)();
     const category = {
       ...insertCategory,
       id,
@@ -1933,7 +1945,7 @@ var MemStorage = class {
     return this.trainings.get(id);
   }
   async createTraining(insertTraining) {
-    const id = randomUUID2();
+    const id = (0, import_crypto2.randomUUID)();
     const training = {
       ...insertTraining,
       id,
@@ -1976,7 +1988,7 @@ var MemStorage = class {
     return Array.from(this.trainingParticipants.values()).filter((p) => p.userId === userId).sort((a, b) => (b.registeredAt?.getTime() || 0) - (a.registeredAt?.getTime() || 0));
   }
   async addTrainingParticipant(insertParticipant) {
-    const id = randomUUID2();
+    const id = (0, import_crypto2.randomUUID)();
     const participant = {
       ...insertParticipant,
       id,
@@ -2417,7 +2429,7 @@ var MemStorage = class {
     return this.courses.get(id);
   }
   async createCourse(insertCourse) {
-    const id = randomUUID2();
+    const id = (0, import_crypto2.randomUUID)();
     const course = {
       ...insertCourse,
       id,
@@ -2455,7 +2467,7 @@ var MemStorage = class {
     return this.lessons.get(id);
   }
   async createLesson(insertLesson) {
-    const id = randomUUID2();
+    const id = (0, import_crypto2.randomUUID)();
     const lesson = {
       ...insertLesson,
       id,
@@ -2489,7 +2501,7 @@ var MemStorage = class {
     return this.quizzes.get(id);
   }
   async createQuiz(insertQuiz) {
-    const id = randomUUID2();
+    const id = (0, import_crypto2.randomUUID)();
     const quiz = {
       ...insertQuiz,
       id,
@@ -2525,7 +2537,7 @@ var MemStorage = class {
     return this.enrollments.get(id);
   }
   async enrollUser(userId, courseId) {
-    const id = randomUUID2();
+    const id = (0, import_crypto2.randomUUID)();
     const enrollment = {
       id,
       userId,
@@ -2554,7 +2566,7 @@ var MemStorage = class {
     const key = `${userId}-${lessonId}`;
     let progress = Array.from(this.lessonProgress.values()).find((p) => p.userId === userId && p.lessonId === lessonId);
     if (!progress) {
-      const id = randomUUID2();
+      const id = (0, import_crypto2.randomUUID)();
       progress = {
         id,
         userId,
@@ -2577,7 +2589,7 @@ var MemStorage = class {
     return Array.from(this.quizAttempts.values()).filter((attempt) => attempt.userId === userId && attempt.quizId === quizId).sort((a, b) => (b.completedAt?.getTime() || 0) - (a.completedAt?.getTime() || 0));
   }
   async createQuizAttempt(attemptData) {
-    const id = randomUUID2();
+    const id = (0, import_crypto2.randomUUID)();
     const attempt = {
       ...attemptData,
       id,
@@ -2591,7 +2603,7 @@ var MemStorage = class {
     return Array.from(this.certificates.values()).filter((cert) => cert.userId === userId).sort((a, b) => (b.issuedAt?.getTime() || 0) - (a.issuedAt?.getTime() || 0));
   }
   async createCertificate(certData) {
-    const id = randomUUID2();
+    const id = (0, import_crypto2.randomUUID)();
     const certificate = {
       ...certData,
       id,
@@ -2610,7 +2622,7 @@ var MemStorage = class {
     return this.resources.get(id);
   }
   async createResource(insertResource) {
-    const id = randomUUID2();
+    const id = (0, import_crypto2.randomUUID)();
     const resource = {
       ...insertResource,
       id,
@@ -2653,7 +2665,7 @@ var MemStorage = class {
     return this.forumCategories.get(id);
   }
   async createForumCategory(insertCategory) {
-    const id = randomUUID2();
+    const id = (0, import_crypto2.randomUUID)();
     const category = {
       ...insertCategory,
       id,
@@ -2700,7 +2712,7 @@ var MemStorage = class {
     return this.forumTopics.get(id);
   }
   async createForumTopic(insertTopic) {
-    const id = randomUUID2();
+    const id = (0, import_crypto2.randomUUID)();
     const topic = {
       ...insertTopic,
       id,
@@ -2759,7 +2771,7 @@ var MemStorage = class {
     return post && !post.isDeleted ? post : void 0;
   }
   async createForumPost(insertPost) {
-    const id = randomUUID2();
+    const id = (0, import_crypto2.randomUUID)();
     const post = {
       ...insertPost,
       id,
@@ -2835,7 +2847,7 @@ var MemStorage = class {
       }
       return null;
     } else {
-      const id = randomUUID2();
+      const id = (0, import_crypto2.randomUUID)();
       const like = {
         ...insertLike,
         id,
@@ -2852,7 +2864,7 @@ var MemStorage = class {
     }
   }
   async createForumLike(insertLike) {
-    const id = randomUUID2();
+    const id = (0, import_crypto2.randomUUID)();
     const like = {
       ...insertLike,
       id,
@@ -2871,7 +2883,7 @@ var MemStorage = class {
   async getForumUserStats(userId) {
     let stats = Array.from(this.forumUserStats.values()).find((s) => s.userId === userId);
     if (!stats) {
-      const id = randomUUID2();
+      const id = (0, import_crypto2.randomUUID)();
       stats = {
         id,
         userId,
@@ -2944,7 +2956,7 @@ var storage = useMySQL ? Object.assign(mem, drizzle2) : mem;
 init_auth();
 
 // server/services/email.ts
-import nodemailer from "nodemailer";
+var import_nodemailer = __toESM(require("nodemailer"), 1);
 var EmailService = class {
   transporter = null;
   isConfigured = false;
@@ -2953,7 +2965,7 @@ var EmailService = class {
    */
   configure(config) {
     try {
-      this.transporter = nodemailer.createTransport({
+      this.transporter = import_nodemailer.default.createTransport({
         host: config.host,
         port: config.port,
         secure: config.secure,
@@ -3103,135 +3115,135 @@ if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
 }
 
 // shared/schema.ts
-import { sql as sql3 } from "drizzle-orm";
-import { pgTable, text as text2, varchar as varchar2, timestamp as timestamp2, boolean as boolean2, integer, real } from "drizzle-orm/pg-core";
-import { createInsertSchema as createInsertSchema2 } from "drizzle-zod";
-import { z } from "zod";
-var users2 = pgTable("users", {
-  id: varchar2("id").primaryKey().default(sql3`gen_random_uuid()`),
-  username: text2("username").notNull().unique(),
-  password: text2("password").notNull(),
-  name: text2("name").notNull(),
-  role: text2("role").notNull().default("employee"),
+var import_drizzle_orm3 = require("drizzle-orm");
+var import_pg_core = require("drizzle-orm/pg-core");
+var import_drizzle_zod2 = require("drizzle-zod");
+var import_zod = require("zod");
+var users2 = (0, import_pg_core.pgTable)("users", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default(import_drizzle_orm3.sql`gen_random_uuid()`),
+  username: (0, import_pg_core.text)("username").notNull().unique(),
+  password: (0, import_pg_core.text)("password").notNull(),
+  name: (0, import_pg_core.text)("name").notNull(),
+  role: (0, import_pg_core.text)("role").notNull().default("employee"),
   // employee, admin, moderator
-  avatar: text2("avatar"),
+  avatar: (0, import_pg_core.text)("avatar"),
   // Extended fields for employee management
-  employeeId: varchar2("employee_id").unique(),
+  employeeId: (0, import_pg_core.varchar)("employee_id").unique(),
   // Unique identifier for internal communication
-  department: varchar2("department"),
-  position: varchar2("position"),
-  isActive: boolean2("is_active").default(true),
-  phone: varchar2("phone"),
-  email: varchar2("email"),
-  createdAt: timestamp2("created_at").defaultNow(),
-  updatedAt: timestamp2("updated_at").defaultNow()
+  department: (0, import_pg_core.varchar)("department"),
+  position: (0, import_pg_core.varchar)("position"),
+  isActive: (0, import_pg_core.boolean)("is_active").default(true),
+  phone: (0, import_pg_core.varchar)("phone"),
+  email: (0, import_pg_core.varchar)("email"),
+  createdAt: (0, import_pg_core.timestamp)("created_at").defaultNow(),
+  updatedAt: (0, import_pg_core.timestamp)("updated_at").defaultNow()
 });
-var announcements2 = pgTable("announcements", {
-  id: varchar2("id").primaryKey().default(sql3`gen_random_uuid()`),
-  title: text2("title").notNull(),
-  content: text2("content").notNull(),
-  type: text2("type").notNull().default("info"),
+var announcements2 = (0, import_pg_core.pgTable)("announcements", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default(import_drizzle_orm3.sql`gen_random_uuid()`),
+  title: (0, import_pg_core.text)("title").notNull(),
+  content: (0, import_pg_core.text)("content").notNull(),
+  type: (0, import_pg_core.text)("type").notNull().default("info"),
   // info, important, event, formation
-  authorId: varchar2("author_id").references(() => users2.id),
-  authorName: text2("author_name").notNull(),
-  imageUrl: text2("image_url"),
-  icon: text2("icon").default("\u{1F4E2}"),
-  createdAt: timestamp2("created_at").defaultNow().notNull(),
-  isImportant: boolean2("is_important").default(false)
+  authorId: (0, import_pg_core.varchar)("author_id").references(() => users2.id),
+  authorName: (0, import_pg_core.text)("author_name").notNull(),
+  imageUrl: (0, import_pg_core.text)("image_url"),
+  icon: (0, import_pg_core.text)("icon").default("\u{1F4E2}"),
+  createdAt: (0, import_pg_core.timestamp)("created_at").defaultNow().notNull(),
+  isImportant: (0, import_pg_core.boolean)("is_important").default(false)
 });
-var documents2 = pgTable("documents", {
-  id: varchar2("id").primaryKey().default(sql3`gen_random_uuid()`),
-  title: text2("title").notNull(),
-  description: text2("description"),
-  category: text2("category").notNull(),
+var documents2 = (0, import_pg_core.pgTable)("documents", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default(import_drizzle_orm3.sql`gen_random_uuid()`),
+  title: (0, import_pg_core.text)("title").notNull(),
+  description: (0, import_pg_core.text)("description"),
+  category: (0, import_pg_core.text)("category").notNull(),
   // regulation, policy, guide, procedure
-  fileName: text2("file_name").notNull(),
-  fileUrl: text2("file_url").notNull(),
-  updatedAt: timestamp2("updated_at").defaultNow().notNull(),
-  version: text2("version").default("1.0")
+  fileName: (0, import_pg_core.text)("file_name").notNull(),
+  fileUrl: (0, import_pg_core.text)("file_url").notNull(),
+  updatedAt: (0, import_pg_core.timestamp)("updated_at").defaultNow().notNull(),
+  version: (0, import_pg_core.text)("version").default("1.0")
 });
-var events2 = pgTable("events", {
-  id: varchar2("id").primaryKey().default(sql3`gen_random_uuid()`),
-  title: text2("title").notNull(),
-  description: text2("description"),
-  date: timestamp2("date").notNull(),
-  location: text2("location"),
-  type: text2("type").notNull().default("meeting"),
+var events2 = (0, import_pg_core.pgTable)("events", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default(import_drizzle_orm3.sql`gen_random_uuid()`),
+  title: (0, import_pg_core.text)("title").notNull(),
+  description: (0, import_pg_core.text)("description"),
+  date: (0, import_pg_core.timestamp)("date").notNull(),
+  location: (0, import_pg_core.text)("location"),
+  type: (0, import_pg_core.text)("type").notNull().default("meeting"),
   // meeting, training, social, other
-  organizerId: varchar2("organizer_id").references(() => users2.id),
-  createdAt: timestamp2("created_at").defaultNow()
+  organizerId: (0, import_pg_core.varchar)("organizer_id").references(() => users2.id),
+  createdAt: (0, import_pg_core.timestamp)("created_at").defaultNow()
 });
-var messages2 = pgTable("messages", {
-  id: varchar2("id").primaryKey().default(sql3`gen_random_uuid()`),
-  senderId: varchar2("sender_id").references(() => users2.id).notNull(),
-  recipientId: varchar2("recipient_id").references(() => users2.id).notNull(),
-  subject: text2("subject").notNull(),
-  content: text2("content").notNull(),
-  isRead: boolean2("is_read").default(false),
-  createdAt: timestamp2("created_at").defaultNow()
+var messages2 = (0, import_pg_core.pgTable)("messages", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default(import_drizzle_orm3.sql`gen_random_uuid()`),
+  senderId: (0, import_pg_core.varchar)("sender_id").references(() => users2.id).notNull(),
+  recipientId: (0, import_pg_core.varchar)("recipient_id").references(() => users2.id).notNull(),
+  subject: (0, import_pg_core.text)("subject").notNull(),
+  content: (0, import_pg_core.text)("content").notNull(),
+  isRead: (0, import_pg_core.boolean)("is_read").default(false),
+  createdAt: (0, import_pg_core.timestamp)("created_at").defaultNow()
 });
-var complaints2 = pgTable("complaints", {
-  id: varchar2("id").primaryKey().default(sql3`gen_random_uuid()`),
-  submitterId: varchar2("submitter_id").references(() => users2.id).notNull(),
-  assignedToId: varchar2("assigned_to_id").references(() => users2.id),
-  title: text2("title").notNull(),
-  description: text2("description").notNull(),
-  category: text2("category").notNull(),
+var complaints2 = (0, import_pg_core.pgTable)("complaints", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default(import_drizzle_orm3.sql`gen_random_uuid()`),
+  submitterId: (0, import_pg_core.varchar)("submitter_id").references(() => users2.id).notNull(),
+  assignedToId: (0, import_pg_core.varchar)("assigned_to_id").references(() => users2.id),
+  title: (0, import_pg_core.text)("title").notNull(),
+  description: (0, import_pg_core.text)("description").notNull(),
+  category: (0, import_pg_core.text)("category").notNull(),
   // hr, it, facilities, other
-  priority: text2("priority").default("medium"),
+  priority: (0, import_pg_core.text)("priority").default("medium"),
   // low, medium, high, urgent
-  status: text2("status").default("open"),
+  status: (0, import_pg_core.text)("status").default("open"),
   // open, in_progress, resolved, closed
-  createdAt: timestamp2("created_at").defaultNow(),
-  updatedAt: timestamp2("updated_at").defaultNow()
+  createdAt: (0, import_pg_core.timestamp)("created_at").defaultNow(),
+  updatedAt: (0, import_pg_core.timestamp)("updated_at").defaultNow()
 });
-var permissions2 = pgTable("permissions", {
-  id: varchar2("id").primaryKey().default(sql3`gen_random_uuid()`),
-  userId: varchar2("user_id").references(() => users2.id).notNull(),
-  grantedBy: varchar2("granted_by").references(() => users2.id).notNull(),
-  permission: text2("permission").notNull(),
+var permissions2 = (0, import_pg_core.pgTable)("permissions", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default(import_drizzle_orm3.sql`gen_random_uuid()`),
+  userId: (0, import_pg_core.varchar)("user_id").references(() => users2.id).notNull(),
+  grantedBy: (0, import_pg_core.varchar)("granted_by").references(() => users2.id).notNull(),
+  permission: (0, import_pg_core.text)("permission").notNull(),
   // manage_announcements, manage_documents, manage_events, manage_users, validate_topics, validate_posts, manage_employee_categories, manage_trainings
-  createdAt: timestamp2("created_at").defaultNow()
+  createdAt: (0, import_pg_core.timestamp)("created_at").defaultNow()
 });
-var trainings2 = pgTable("trainings", {
-  id: varchar2("id").primaryKey().default(sql3`gen_random_uuid()`),
-  title: text2("title").notNull(),
-  description: text2("description"),
-  category: text2("category").notNull(),
+var trainings2 = (0, import_pg_core.pgTable)("trainings", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default(import_drizzle_orm3.sql`gen_random_uuid()`),
+  title: (0, import_pg_core.text)("title").notNull(),
+  description: (0, import_pg_core.text)("description"),
+  category: (0, import_pg_core.text)("category").notNull(),
   // technical, management, safety, compliance, other
-  difficulty: text2("difficulty").default("beginner"),
+  difficulty: (0, import_pg_core.text)("difficulty").default("beginner"),
   // beginner, intermediate, advanced
-  duration: integer("duration").notNull(),
+  duration: (0, import_pg_core.integer)("duration").notNull(),
   // duration in minutes
-  instructorId: varchar2("instructor_id").references(() => users2.id),
-  instructorName: text2("instructor_name").notNull(),
-  startDate: timestamp2("start_date"),
-  endDate: timestamp2("end_date"),
-  location: text2("location"),
-  maxParticipants: integer("max_participants"),
-  currentParticipants: integer("current_participants").default(0),
-  isMandatory: boolean2("is_mandatory").default(false),
-  isActive: boolean2("is_active").default(true),
-  isVisible: boolean2("is_visible").default(true),
-  thumbnailUrl: text2("thumbnail_url"),
-  documentUrls: text2("document_urls").array().default(sql3`ARRAY[]::text[]`),
+  instructorId: (0, import_pg_core.varchar)("instructor_id").references(() => users2.id),
+  instructorName: (0, import_pg_core.text)("instructor_name").notNull(),
+  startDate: (0, import_pg_core.timestamp)("start_date"),
+  endDate: (0, import_pg_core.timestamp)("end_date"),
+  location: (0, import_pg_core.text)("location"),
+  maxParticipants: (0, import_pg_core.integer)("max_participants"),
+  currentParticipants: (0, import_pg_core.integer)("current_participants").default(0),
+  isMandatory: (0, import_pg_core.boolean)("is_mandatory").default(false),
+  isActive: (0, import_pg_core.boolean)("is_active").default(true),
+  isVisible: (0, import_pg_core.boolean)("is_visible").default(true),
+  thumbnailUrl: (0, import_pg_core.text)("thumbnail_url"),
+  documentUrls: (0, import_pg_core.text)("document_urls").array().default(import_drizzle_orm3.sql`ARRAY[]::text[]`),
   // Array of document URLs
-  createdAt: timestamp2("created_at").defaultNow().notNull(),
-  updatedAt: timestamp2("updated_at").defaultNow()
+  createdAt: (0, import_pg_core.timestamp)("created_at").defaultNow().notNull(),
+  updatedAt: (0, import_pg_core.timestamp)("updated_at").defaultNow()
 });
-var trainingParticipants = pgTable("training_participants", {
-  id: varchar2("id").primaryKey().default(sql3`gen_random_uuid()`),
-  trainingId: varchar2("training_id").references(() => trainings2.id, { onDelete: "cascade" }).notNull(),
-  userId: varchar2("user_id").references(() => users2.id, { onDelete: "cascade" }).notNull(),
-  registeredAt: timestamp2("registered_at").defaultNow(),
-  status: text2("status").default("registered"),
+var trainingParticipants = (0, import_pg_core.pgTable)("training_participants", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default(import_drizzle_orm3.sql`gen_random_uuid()`),
+  trainingId: (0, import_pg_core.varchar)("training_id").references(() => trainings2.id, { onDelete: "cascade" }).notNull(),
+  userId: (0, import_pg_core.varchar)("user_id").references(() => users2.id, { onDelete: "cascade" }).notNull(),
+  registeredAt: (0, import_pg_core.timestamp)("registered_at").defaultNow(),
+  status: (0, import_pg_core.text)("status").default("registered"),
   // registered, completed, cancelled
-  completionDate: timestamp2("completion_date"),
-  score: integer("score"),
+  completionDate: (0, import_pg_core.timestamp)("completion_date"),
+  score: (0, import_pg_core.integer)("score"),
   // 0-100
-  feedback: text2("feedback")
+  feedback: (0, import_pg_core.text)("feedback")
 });
-var insertUserSchema2 = createInsertSchema2(users2).pick({
+var insertUserSchema2 = (0, import_drizzle_zod2.createInsertSchema)(users2).pick({
   username: true,
   password: true,
   name: true,
@@ -3243,17 +3255,17 @@ var insertUserSchema2 = createInsertSchema2(users2).pick({
   phone: true,
   email: true
 });
-var insertAnnouncementSchema2 = createInsertSchema2(announcements2).pick({
+var insertAnnouncementSchema2 = (0, import_drizzle_zod2.createInsertSchema)(announcements2).pick({
   title: true,
   content: true,
   type: true,
   authorName: true,
   isImportant: true
 }).extend({
-  imageUrl: z.string().optional(),
-  icon: z.string().optional()
+  imageUrl: import_zod.z.string().optional(),
+  icon: import_zod.z.string().optional()
 });
-var insertDocumentSchema2 = createInsertSchema2(documents2).pick({
+var insertDocumentSchema2 = (0, import_drizzle_zod2.createInsertSchema)(documents2).pick({
   title: true,
   description: true,
   category: true,
@@ -3261,7 +3273,7 @@ var insertDocumentSchema2 = createInsertSchema2(documents2).pick({
   fileUrl: true,
   version: true
 });
-var insertEventSchema2 = createInsertSchema2(events2).pick({
+var insertEventSchema2 = (0, import_drizzle_zod2.createInsertSchema)(events2).pick({
   title: true,
   description: true,
   date: true,
@@ -3269,13 +3281,13 @@ var insertEventSchema2 = createInsertSchema2(events2).pick({
   type: true,
   organizerId: true
 });
-var insertMessageSchema2 = createInsertSchema2(messages2).pick({
+var insertMessageSchema2 = (0, import_drizzle_zod2.createInsertSchema)(messages2).pick({
   senderId: true,
   recipientId: true,
   subject: true,
   content: true
 });
-var insertComplaintSchema2 = createInsertSchema2(complaints2).pick({
+var insertComplaintSchema2 = (0, import_drizzle_zod2.createInsertSchema)(complaints2).pick({
   submitterId: true,
   assignedToId: true,
   title: true,
@@ -3283,61 +3295,61 @@ var insertComplaintSchema2 = createInsertSchema2(complaints2).pick({
   category: true,
   priority: true
 });
-var contents = pgTable("contents", {
-  id: varchar2("id").primaryKey().default(sql3`gen_random_uuid()`),
-  title: text2("title").notNull(),
-  type: text2("type").notNull(),
+var contents = (0, import_pg_core.pgTable)("contents", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default(import_drizzle_orm3.sql`gen_random_uuid()`),
+  title: (0, import_pg_core.text)("title").notNull(),
+  type: (0, import_pg_core.text)("type").notNull(),
   // video, image, document, audio
-  category: text2("category").notNull(),
-  description: text2("description"),
-  fileUrl: text2("file_url").notNull(),
-  thumbnailUrl: text2("thumbnail_url"),
-  duration: text2("duration"),
-  viewCount: integer("view_count").default(0),
-  rating: integer("rating").default(0),
-  tags: text2("tags").array(),
-  isPopular: boolean2("is_popular").default(false),
-  isFeatured: boolean2("is_featured").default(false),
-  createdAt: timestamp2("created_at").defaultNow().notNull(),
-  updatedAt: timestamp2("updated_at").defaultNow().notNull()
+  category: (0, import_pg_core.text)("category").notNull(),
+  description: (0, import_pg_core.text)("description"),
+  fileUrl: (0, import_pg_core.text)("file_url").notNull(),
+  thumbnailUrl: (0, import_pg_core.text)("thumbnail_url"),
+  duration: (0, import_pg_core.text)("duration"),
+  viewCount: (0, import_pg_core.integer)("view_count").default(0),
+  rating: (0, import_pg_core.integer)("rating").default(0),
+  tags: (0, import_pg_core.text)("tags").array(),
+  isPopular: (0, import_pg_core.boolean)("is_popular").default(false),
+  isFeatured: (0, import_pg_core.boolean)("is_featured").default(false),
+  createdAt: (0, import_pg_core.timestamp)("created_at").defaultNow().notNull(),
+  updatedAt: (0, import_pg_core.timestamp)("updated_at").defaultNow().notNull()
 });
-var categories = pgTable("categories", {
-  id: varchar2("id").primaryKey().default(sql3`gen_random_uuid()`),
-  name: text2("name").notNull().unique(),
-  description: text2("description"),
-  icon: text2("icon").default("\u{1F4C1}"),
-  color: text2("color").default("#3B82F6"),
-  isVisible: boolean2("is_visible").default(true),
-  sortOrder: integer("sort_order").default(0),
-  createdAt: timestamp2("created_at").defaultNow().notNull()
+var categories = (0, import_pg_core.pgTable)("categories", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default(import_drizzle_orm3.sql`gen_random_uuid()`),
+  name: (0, import_pg_core.text)("name").notNull().unique(),
+  description: (0, import_pg_core.text)("description"),
+  icon: (0, import_pg_core.text)("icon").default("\u{1F4C1}"),
+  color: (0, import_pg_core.text)("color").default("#3B82F6"),
+  isVisible: (0, import_pg_core.boolean)("is_visible").default(true),
+  sortOrder: (0, import_pg_core.integer)("sort_order").default(0),
+  createdAt: (0, import_pg_core.timestamp)("created_at").defaultNow().notNull()
 });
-var employeeCategories = pgTable("employee_categories", {
-  id: varchar2("id").primaryKey().default(sql3`gen_random_uuid()`),
-  name: text2("name").notNull().unique(),
-  description: text2("description"),
-  color: text2("color").default("#10B981"),
-  permissions: text2("permissions").array().default(sql3`ARRAY[]::text[]`),
+var employeeCategories = (0, import_pg_core.pgTable)("employee_categories", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default(import_drizzle_orm3.sql`gen_random_uuid()`),
+  name: (0, import_pg_core.text)("name").notNull().unique(),
+  description: (0, import_pg_core.text)("description"),
+  color: (0, import_pg_core.text)("color").default("#10B981"),
+  permissions: (0, import_pg_core.text)("permissions").array().default(import_drizzle_orm3.sql`ARRAY[]::text[]`),
   // Array of permission codes
-  isActive: boolean2("is_active").default(true),
-  createdAt: timestamp2("created_at").defaultNow().notNull()
+  isActive: (0, import_pg_core.boolean)("is_active").default(true),
+  createdAt: (0, import_pg_core.timestamp)("created_at").defaultNow().notNull()
 });
-var systemSettings = pgTable("system_settings", {
-  id: varchar2("id").primaryKey().default("settings"),
-  showAnnouncements: boolean2("show_announcements").default(true),
-  showContent: boolean2("show_content").default(true),
-  showDocuments: boolean2("show_documents").default(true),
-  showForum: boolean2("show_forum").default(true),
-  showMessages: boolean2("show_messages").default(true),
-  showComplaints: boolean2("show_complaints").default(true),
-  showTraining: boolean2("show_training").default(true),
-  updatedAt: timestamp2("updated_at").defaultNow()
+var systemSettings = (0, import_pg_core.pgTable)("system_settings", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default("settings"),
+  showAnnouncements: (0, import_pg_core.boolean)("show_announcements").default(true),
+  showContent: (0, import_pg_core.boolean)("show_content").default(true),
+  showDocuments: (0, import_pg_core.boolean)("show_documents").default(true),
+  showForum: (0, import_pg_core.boolean)("show_forum").default(true),
+  showMessages: (0, import_pg_core.boolean)("show_messages").default(true),
+  showComplaints: (0, import_pg_core.boolean)("show_complaints").default(true),
+  showTraining: (0, import_pg_core.boolean)("show_training").default(true),
+  updatedAt: (0, import_pg_core.timestamp)("updated_at").defaultNow()
 });
-var insertPermissionSchema = createInsertSchema2(permissions2).pick({
+var insertPermissionSchema = (0, import_drizzle_zod2.createInsertSchema)(permissions2).pick({
   userId: true,
   grantedBy: true,
   permission: true
 });
-var insertContentSchema = createInsertSchema2(contents).pick({
+var insertContentSchema = (0, import_drizzle_zod2.createInsertSchema)(contents).pick({
   title: true,
   type: true,
   category: true,
@@ -3349,7 +3361,7 @@ var insertContentSchema = createInsertSchema2(contents).pick({
   isFeatured: true,
   tags: true
 });
-var insertCategorySchema = createInsertSchema2(categories).pick({
+var insertCategorySchema = (0, import_drizzle_zod2.createInsertSchema)(categories).pick({
   name: true,
   color: true,
   icon: true,
@@ -3357,14 +3369,14 @@ var insertCategorySchema = createInsertSchema2(categories).pick({
   isVisible: true,
   sortOrder: true
 });
-var insertEmployeeCategorySchema = createInsertSchema2(employeeCategories).pick({
+var insertEmployeeCategorySchema = (0, import_drizzle_zod2.createInsertSchema)(employeeCategories).pick({
   name: true,
   description: true,
   color: true,
   permissions: true,
   isActive: true
 });
-var insertSystemSettingsSchema = createInsertSchema2(systemSettings).pick({
+var insertSystemSettingsSchema = (0, import_drizzle_zod2.createInsertSchema)(systemSettings).pick({
   showAnnouncements: true,
   showContent: true,
   showDocuments: true,
@@ -3373,7 +3385,7 @@ var insertSystemSettingsSchema = createInsertSchema2(systemSettings).pick({
   showComplaints: true,
   showTraining: true
 });
-var insertTrainingSchema2 = createInsertSchema2(trainings2).pick({
+var insertTrainingSchema2 = (0, import_drizzle_zod2.createInsertSchema)(trainings2).pick({
   title: true,
   description: true,
   category: true,
@@ -3390,7 +3402,7 @@ var insertTrainingSchema2 = createInsertSchema2(trainings2).pick({
   thumbnailUrl: true,
   documentUrls: true
 });
-var insertTrainingParticipantSchema = createInsertSchema2(trainingParticipants).pick({
+var insertTrainingParticipantSchema = (0, import_drizzle_zod2.createInsertSchema)(trainingParticipants).pick({
   trainingId: true,
   userId: true,
   status: true,
@@ -3398,132 +3410,132 @@ var insertTrainingParticipantSchema = createInsertSchema2(trainingParticipants).
   score: true,
   feedback: true
 });
-var courses = pgTable("courses", {
-  id: varchar2("id").primaryKey().default(sql3`gen_random_uuid()`),
-  title: text2("title").notNull(),
-  description: text2("description"),
-  category: text2("category").notNull(),
+var courses = (0, import_pg_core.pgTable)("courses", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default(import_drizzle_orm3.sql`gen_random_uuid()`),
+  title: (0, import_pg_core.text)("title").notNull(),
+  description: (0, import_pg_core.text)("description"),
+  category: (0, import_pg_core.text)("category").notNull(),
   // technical, compliance, soft-skills, leadership
-  difficulty: text2("difficulty").notNull().default("beginner"),
+  difficulty: (0, import_pg_core.text)("difficulty").notNull().default("beginner"),
   // beginner, intermediate, advanced
-  duration: integer("duration"),
+  duration: (0, import_pg_core.integer)("duration"),
   // in minutes
-  thumbnailUrl: text2("thumbnail_url"),
-  authorId: varchar2("author_id").references(() => users2.id),
-  authorName: text2("author_name").notNull(),
-  isPublished: boolean2("is_published").default(false),
-  isMandatory: boolean2("is_mandatory").default(false),
-  prerequisites: text2("prerequisites"),
+  thumbnailUrl: (0, import_pg_core.text)("thumbnail_url"),
+  authorId: (0, import_pg_core.varchar)("author_id").references(() => users2.id),
+  authorName: (0, import_pg_core.text)("author_name").notNull(),
+  isPublished: (0, import_pg_core.boolean)("is_published").default(false),
+  isMandatory: (0, import_pg_core.boolean)("is_mandatory").default(false),
+  prerequisites: (0, import_pg_core.text)("prerequisites"),
   // JSON array of course IDs
-  tags: text2("tags"),
+  tags: (0, import_pg_core.text)("tags"),
   // JSON array of tags
-  createdAt: timestamp2("created_at").defaultNow(),
-  updatedAt: timestamp2("updated_at").defaultNow()
+  createdAt: (0, import_pg_core.timestamp)("created_at").defaultNow(),
+  updatedAt: (0, import_pg_core.timestamp)("updated_at").defaultNow()
 });
-var lessons = pgTable("lessons", {
-  id: varchar2("id").primaryKey().default(sql3`gen_random_uuid()`),
-  courseId: varchar2("course_id").references(() => courses.id).notNull(),
-  title: text2("title").notNull(),
-  description: text2("description"),
-  content: text2("content").notNull(),
+var lessons = (0, import_pg_core.pgTable)("lessons", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default(import_drizzle_orm3.sql`gen_random_uuid()`),
+  courseId: (0, import_pg_core.varchar)("course_id").references(() => courses.id).notNull(),
+  title: (0, import_pg_core.text)("title").notNull(),
+  description: (0, import_pg_core.text)("description"),
+  content: (0, import_pg_core.text)("content").notNull(),
   // HTML content
-  order: integer("order").default(0),
-  duration: integer("duration"),
+  order: (0, import_pg_core.integer)("order").default(0),
+  duration: (0, import_pg_core.integer)("duration"),
   // in minutes
-  videoUrl: text2("video_url"),
-  documentUrl: text2("document_url"),
-  isRequired: boolean2("is_required").default(true),
-  createdAt: timestamp2("created_at").defaultNow(),
-  updatedAt: timestamp2("updated_at").defaultNow()
+  videoUrl: (0, import_pg_core.text)("video_url"),
+  documentUrl: (0, import_pg_core.text)("document_url"),
+  isRequired: (0, import_pg_core.boolean)("is_required").default(true),
+  createdAt: (0, import_pg_core.timestamp)("created_at").defaultNow(),
+  updatedAt: (0, import_pg_core.timestamp)("updated_at").defaultNow()
 });
-var quizzes = pgTable("quizzes", {
-  id: varchar2("id").primaryKey().default(sql3`gen_random_uuid()`),
-  courseId: varchar2("course_id").references(() => courses.id),
-  lessonId: varchar2("lesson_id").references(() => lessons.id),
-  title: text2("title").notNull(),
-  description: text2("description"),
-  questions: text2("questions").notNull(),
+var quizzes = (0, import_pg_core.pgTable)("quizzes", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default(import_drizzle_orm3.sql`gen_random_uuid()`),
+  courseId: (0, import_pg_core.varchar)("course_id").references(() => courses.id),
+  lessonId: (0, import_pg_core.varchar)("lesson_id").references(() => lessons.id),
+  title: (0, import_pg_core.text)("title").notNull(),
+  description: (0, import_pg_core.text)("description"),
+  questions: (0, import_pg_core.text)("questions").notNull(),
   // JSON array of questions
-  passingScore: integer("passing_score").default(70),
+  passingScore: (0, import_pg_core.integer)("passing_score").default(70),
   // percentage
-  timeLimit: integer("time_limit"),
+  timeLimit: (0, import_pg_core.integer)("time_limit"),
   // in minutes
-  allowRetries: boolean2("allow_retries").default(true),
-  maxAttempts: integer("max_attempts").default(3),
-  isRequired: boolean2("is_required").default(false),
-  createdAt: timestamp2("created_at").defaultNow(),
-  updatedAt: timestamp2("updated_at").defaultNow()
+  allowRetries: (0, import_pg_core.boolean)("allow_retries").default(true),
+  maxAttempts: (0, import_pg_core.integer)("max_attempts").default(3),
+  isRequired: (0, import_pg_core.boolean)("is_required").default(false),
+  createdAt: (0, import_pg_core.timestamp)("created_at").defaultNow(),
+  updatedAt: (0, import_pg_core.timestamp)("updated_at").defaultNow()
 });
-var enrollments = pgTable("enrollments", {
-  id: varchar2("id").primaryKey().default(sql3`gen_random_uuid()`),
-  userId: varchar2("user_id").references(() => users2.id).notNull(),
-  courseId: varchar2("course_id").references(() => courses.id).notNull(),
-  enrolledAt: timestamp2("enrolled_at").defaultNow(),
-  startedAt: timestamp2("started_at"),
-  completedAt: timestamp2("completed_at"),
-  progress: integer("progress").default(0),
+var enrollments = (0, import_pg_core.pgTable)("enrollments", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default(import_drizzle_orm3.sql`gen_random_uuid()`),
+  userId: (0, import_pg_core.varchar)("user_id").references(() => users2.id).notNull(),
+  courseId: (0, import_pg_core.varchar)("course_id").references(() => courses.id).notNull(),
+  enrolledAt: (0, import_pg_core.timestamp)("enrolled_at").defaultNow(),
+  startedAt: (0, import_pg_core.timestamp)("started_at"),
+  completedAt: (0, import_pg_core.timestamp)("completed_at"),
+  progress: (0, import_pg_core.integer)("progress").default(0),
   // percentage
-  status: text2("status").default("enrolled"),
+  status: (0, import_pg_core.text)("status").default("enrolled"),
   // enrolled, in-progress, completed, failed
-  certificateUrl: text2("certificate_url")
+  certificateUrl: (0, import_pg_core.text)("certificate_url")
 });
-var lessonProgress = pgTable("lesson_progress", {
-  id: varchar2("id").primaryKey().default(sql3`gen_random_uuid()`),
-  userId: varchar2("user_id").references(() => users2.id).notNull(),
-  lessonId: varchar2("lesson_id").references(() => lessons.id).notNull(),
-  courseId: varchar2("course_id").references(() => courses.id).notNull(),
-  isCompleted: boolean2("is_completed").default(false),
-  timeSpent: integer("time_spent").default(0),
+var lessonProgress = (0, import_pg_core.pgTable)("lesson_progress", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default(import_drizzle_orm3.sql`gen_random_uuid()`),
+  userId: (0, import_pg_core.varchar)("user_id").references(() => users2.id).notNull(),
+  lessonId: (0, import_pg_core.varchar)("lesson_id").references(() => lessons.id).notNull(),
+  courseId: (0, import_pg_core.varchar)("course_id").references(() => courses.id).notNull(),
+  isCompleted: (0, import_pg_core.boolean)("is_completed").default(false),
+  timeSpent: (0, import_pg_core.integer)("time_spent").default(0),
   // in minutes
-  completedAt: timestamp2("completed_at"),
-  createdAt: timestamp2("created_at").defaultNow()
+  completedAt: (0, import_pg_core.timestamp)("completed_at"),
+  createdAt: (0, import_pg_core.timestamp)("created_at").defaultNow()
 });
-var quizAttempts = pgTable("quiz_attempts", {
-  id: varchar2("id").primaryKey().default(sql3`gen_random_uuid()`),
-  userId: varchar2("user_id").references(() => users2.id).notNull(),
-  quizId: varchar2("quiz_id").references(() => quizzes.id).notNull(),
-  courseId: varchar2("course_id").references(() => courses.id).notNull(),
-  answers: text2("answers").notNull(),
+var quizAttempts = (0, import_pg_core.pgTable)("quiz_attempts", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default(import_drizzle_orm3.sql`gen_random_uuid()`),
+  userId: (0, import_pg_core.varchar)("user_id").references(() => users2.id).notNull(),
+  quizId: (0, import_pg_core.varchar)("quiz_id").references(() => quizzes.id).notNull(),
+  courseId: (0, import_pg_core.varchar)("course_id").references(() => courses.id).notNull(),
+  answers: (0, import_pg_core.text)("answers").notNull(),
   // JSON array of answers
-  score: integer("score"),
+  score: (0, import_pg_core.integer)("score"),
   // percentage
-  passed: boolean2("passed").default(false),
-  attemptNumber: integer("attempt_number").default(1),
-  timeSpent: integer("time_spent"),
+  passed: (0, import_pg_core.boolean)("passed").default(false),
+  attemptNumber: (0, import_pg_core.integer)("attempt_number").default(1),
+  timeSpent: (0, import_pg_core.integer)("time_spent"),
   // in minutes
-  completedAt: timestamp2("completed_at").defaultNow()
+  completedAt: (0, import_pg_core.timestamp)("completed_at").defaultNow()
 });
-var certificates = pgTable("certificates", {
-  id: varchar2("id").primaryKey().default(sql3`gen_random_uuid()`),
-  userId: varchar2("user_id").references(() => users2.id).notNull(),
-  courseId: varchar2("course_id").references(() => courses.id).notNull(),
-  title: text2("title").notNull(),
-  description: text2("description"),
-  certificateUrl: text2("certificate_url"),
-  validUntil: timestamp2("valid_until"),
-  issuedAt: timestamp2("issued_at").defaultNow()
+var certificates = (0, import_pg_core.pgTable)("certificates", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default(import_drizzle_orm3.sql`gen_random_uuid()`),
+  userId: (0, import_pg_core.varchar)("user_id").references(() => users2.id).notNull(),
+  courseId: (0, import_pg_core.varchar)("course_id").references(() => courses.id).notNull(),
+  title: (0, import_pg_core.text)("title").notNull(),
+  description: (0, import_pg_core.text)("description"),
+  certificateUrl: (0, import_pg_core.text)("certificate_url"),
+  validUntil: (0, import_pg_core.timestamp)("valid_until"),
+  issuedAt: (0, import_pg_core.timestamp)("issued_at").defaultNow()
 });
-var resources = pgTable("resources", {
-  id: varchar2("id").primaryKey().default(sql3`gen_random_uuid()`),
-  title: text2("title").notNull(),
-  description: text2("description"),
-  category: text2("category").notNull(),
+var resources = (0, import_pg_core.pgTable)("resources", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default(import_drizzle_orm3.sql`gen_random_uuid()`),
+  title: (0, import_pg_core.text)("title").notNull(),
+  description: (0, import_pg_core.text)("description"),
+  category: (0, import_pg_core.text)("category").notNull(),
   // documentation, template, guide, reference
-  type: text2("type").notNull(),
+  type: (0, import_pg_core.text)("type").notNull(),
   // pdf, video, link, document
-  url: text2("url").notNull(),
-  thumbnailUrl: text2("thumbnail_url"),
-  authorId: varchar2("author_id").references(() => users2.id),
-  authorName: text2("author_name").notNull(),
-  tags: text2("tags"),
+  url: (0, import_pg_core.text)("url").notNull(),
+  thumbnailUrl: (0, import_pg_core.text)("thumbnail_url"),
+  authorId: (0, import_pg_core.varchar)("author_id").references(() => users2.id),
+  authorName: (0, import_pg_core.text)("author_name").notNull(),
+  tags: (0, import_pg_core.text)("tags"),
   // JSON array of tags
-  downloadCount: integer("download_count").default(0),
-  rating: real("rating").default(0),
-  isPublic: boolean2("is_public").default(true),
-  createdAt: timestamp2("created_at").defaultNow(),
-  updatedAt: timestamp2("updated_at").defaultNow()
+  downloadCount: (0, import_pg_core.integer)("download_count").default(0),
+  rating: (0, import_pg_core.real)("rating").default(0),
+  isPublic: (0, import_pg_core.boolean)("is_public").default(true),
+  createdAt: (0, import_pg_core.timestamp)("created_at").defaultNow(),
+  updatedAt: (0, import_pg_core.timestamp)("updated_at").defaultNow()
 });
-var insertCourseSchema = createInsertSchema2(courses).pick({
+var insertCourseSchema = (0, import_drizzle_zod2.createInsertSchema)(courses).pick({
   title: true,
   description: true,
   category: true,
@@ -3536,7 +3548,7 @@ var insertCourseSchema = createInsertSchema2(courses).pick({
   prerequisites: true,
   tags: true
 });
-var insertLessonSchema = createInsertSchema2(lessons).pick({
+var insertLessonSchema = (0, import_drizzle_zod2.createInsertSchema)(lessons).pick({
   courseId: true,
   title: true,
   description: true,
@@ -3547,7 +3559,7 @@ var insertLessonSchema = createInsertSchema2(lessons).pick({
   documentUrl: true,
   isRequired: true
 });
-var insertQuizSchema = createInsertSchema2(quizzes).pick({
+var insertQuizSchema = (0, import_drizzle_zod2.createInsertSchema)(quizzes).pick({
   courseId: true,
   lessonId: true,
   title: true,
@@ -3559,7 +3571,7 @@ var insertQuizSchema = createInsertSchema2(quizzes).pick({
   maxAttempts: true,
   isRequired: true
 });
-var insertResourceSchema = createInsertSchema2(resources).pick({
+var insertResourceSchema = (0, import_drizzle_zod2.createInsertSchema)(resources).pick({
   title: true,
   description: true,
   category: true,
@@ -3570,85 +3582,85 @@ var insertResourceSchema = createInsertSchema2(resources).pick({
   tags: true,
   isPublic: true
 });
-var forumCategories2 = pgTable("forum_categories", {
-  id: varchar2("id").primaryKey().default(sql3`gen_random_uuid()`),
-  name: text2("name").notNull(),
-  description: text2("description"),
-  color: text2("color").default("#3B82F6"),
-  icon: text2("icon").default("\u{1F4AC}"),
-  sortOrder: integer("sort_order").default(0),
-  isActive: boolean2("is_active").default(true),
-  isModerated: boolean2("is_moderated").default(false),
-  accessLevel: text2("access_level").default("all"),
+var forumCategories2 = (0, import_pg_core.pgTable)("forum_categories", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default(import_drizzle_orm3.sql`gen_random_uuid()`),
+  name: (0, import_pg_core.text)("name").notNull(),
+  description: (0, import_pg_core.text)("description"),
+  color: (0, import_pg_core.text)("color").default("#3B82F6"),
+  icon: (0, import_pg_core.text)("icon").default("\u{1F4AC}"),
+  sortOrder: (0, import_pg_core.integer)("sort_order").default(0),
+  isActive: (0, import_pg_core.boolean)("is_active").default(true),
+  isModerated: (0, import_pg_core.boolean)("is_moderated").default(false),
+  accessLevel: (0, import_pg_core.text)("access_level").default("all"),
   // all, employee, moderator, admin
-  moderatorIds: text2("moderator_ids"),
+  moderatorIds: (0, import_pg_core.text)("moderator_ids"),
   // JSON array of user IDs
-  createdAt: timestamp2("created_at").defaultNow()
+  createdAt: (0, import_pg_core.timestamp)("created_at").defaultNow()
 });
-var forumTopics2 = pgTable("forum_topics", {
-  id: varchar2("id").primaryKey().default(sql3`gen_random_uuid()`),
-  categoryId: varchar2("category_id").references(() => forumCategories2.id).notNull(),
-  title: text2("title").notNull(),
-  description: text2("description"),
-  authorId: varchar2("author_id").references(() => users2.id).notNull(),
-  authorName: text2("author_name").notNull(),
-  isPinned: boolean2("is_pinned").default(false),
-  isLocked: boolean2("is_locked").default(false),
-  isAnnouncement: boolean2("is_announcement").default(false),
-  viewCount: integer("view_count").default(0),
-  replyCount: integer("reply_count").default(0),
-  lastReplyAt: timestamp2("last_reply_at"),
-  lastReplyBy: varchar2("last_reply_by").references(() => users2.id),
-  lastReplyByName: text2("last_reply_by_name"),
-  tags: text2("tags"),
+var forumTopics2 = (0, import_pg_core.pgTable)("forum_topics", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default(import_drizzle_orm3.sql`gen_random_uuid()`),
+  categoryId: (0, import_pg_core.varchar)("category_id").references(() => forumCategories2.id).notNull(),
+  title: (0, import_pg_core.text)("title").notNull(),
+  description: (0, import_pg_core.text)("description"),
+  authorId: (0, import_pg_core.varchar)("author_id").references(() => users2.id).notNull(),
+  authorName: (0, import_pg_core.text)("author_name").notNull(),
+  isPinned: (0, import_pg_core.boolean)("is_pinned").default(false),
+  isLocked: (0, import_pg_core.boolean)("is_locked").default(false),
+  isAnnouncement: (0, import_pg_core.boolean)("is_announcement").default(false),
+  viewCount: (0, import_pg_core.integer)("view_count").default(0),
+  replyCount: (0, import_pg_core.integer)("reply_count").default(0),
+  lastReplyAt: (0, import_pg_core.timestamp)("last_reply_at"),
+  lastReplyBy: (0, import_pg_core.varchar)("last_reply_by").references(() => users2.id),
+  lastReplyByName: (0, import_pg_core.text)("last_reply_by_name"),
+  tags: (0, import_pg_core.text)("tags"),
   // JSON array of tags
-  createdAt: timestamp2("created_at").defaultNow(),
-  updatedAt: timestamp2("updated_at").defaultNow()
+  createdAt: (0, import_pg_core.timestamp)("created_at").defaultNow(),
+  updatedAt: (0, import_pg_core.timestamp)("updated_at").defaultNow()
 });
-var forumPosts2 = pgTable("forum_posts", {
-  id: varchar2("id").primaryKey().default(sql3`gen_random_uuid()`),
-  topicId: varchar2("topic_id").references(() => forumTopics2.id).notNull(),
-  categoryId: varchar2("category_id").references(() => forumCategories2.id).notNull(),
-  authorId: varchar2("author_id").references(() => users2.id).notNull(),
-  authorName: text2("author_name").notNull(),
-  content: text2("content").notNull(),
-  isFirstPost: boolean2("is_first_post").default(false),
+var forumPosts2 = (0, import_pg_core.pgTable)("forum_posts", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default(import_drizzle_orm3.sql`gen_random_uuid()`),
+  topicId: (0, import_pg_core.varchar)("topic_id").references(() => forumTopics2.id).notNull(),
+  categoryId: (0, import_pg_core.varchar)("category_id").references(() => forumCategories2.id).notNull(),
+  authorId: (0, import_pg_core.varchar)("author_id").references(() => users2.id).notNull(),
+  authorName: (0, import_pg_core.text)("author_name").notNull(),
+  content: (0, import_pg_core.text)("content").notNull(),
+  isFirstPost: (0, import_pg_core.boolean)("is_first_post").default(false),
   // Original topic post
-  parentPostId: varchar2("parent_post_id"),
+  parentPostId: (0, import_pg_core.varchar)("parent_post_id"),
   // For threaded replies - self-reference handled separately
-  likeCount: integer("like_count").default(0),
-  isEdited: boolean2("is_edited").default(false),
-  editedAt: timestamp2("edited_at"),
-  editedBy: varchar2("edited_by").references(() => users2.id),
-  isDeleted: boolean2("is_deleted").default(false),
-  deletedAt: timestamp2("deleted_at"),
-  deletedBy: varchar2("deleted_by").references(() => users2.id),
-  attachments: text2("attachments"),
+  likeCount: (0, import_pg_core.integer)("like_count").default(0),
+  isEdited: (0, import_pg_core.boolean)("is_edited").default(false),
+  editedAt: (0, import_pg_core.timestamp)("edited_at"),
+  editedBy: (0, import_pg_core.varchar)("edited_by").references(() => users2.id),
+  isDeleted: (0, import_pg_core.boolean)("is_deleted").default(false),
+  deletedAt: (0, import_pg_core.timestamp)("deleted_at"),
+  deletedBy: (0, import_pg_core.varchar)("deleted_by").references(() => users2.id),
+  attachments: (0, import_pg_core.text)("attachments"),
   // JSON array of file URLs
-  createdAt: timestamp2("created_at").defaultNow(),
-  updatedAt: timestamp2("updated_at").defaultNow()
+  createdAt: (0, import_pg_core.timestamp)("created_at").defaultNow(),
+  updatedAt: (0, import_pg_core.timestamp)("updated_at").defaultNow()
 });
-var forumLikes2 = pgTable("forum_likes", {
-  id: varchar2("id").primaryKey().default(sql3`gen_random_uuid()`),
-  postId: varchar2("post_id").references(() => forumPosts2.id).notNull(),
-  userId: varchar2("user_id").references(() => users2.id).notNull(),
-  reactionType: text2("reaction_type").default("like"),
+var forumLikes2 = (0, import_pg_core.pgTable)("forum_likes", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default(import_drizzle_orm3.sql`gen_random_uuid()`),
+  postId: (0, import_pg_core.varchar)("post_id").references(() => forumPosts2.id).notNull(),
+  userId: (0, import_pg_core.varchar)("user_id").references(() => users2.id).notNull(),
+  reactionType: (0, import_pg_core.text)("reaction_type").default("like"),
   // like, love, laugh, angry, sad
-  createdAt: timestamp2("created_at").defaultNow()
+  createdAt: (0, import_pg_core.timestamp)("created_at").defaultNow()
 });
-var forumUserStats = pgTable("forum_user_stats", {
-  id: varchar2("id").primaryKey().default(sql3`gen_random_uuid()`),
-  userId: varchar2("user_id").references(() => users2.id).notNull().unique(),
-  postCount: integer("post_count").default(0),
-  topicCount: integer("topic_count").default(0),
-  likeCount: integer("like_count").default(0),
-  reputationScore: integer("reputation_score").default(0),
-  badges: text2("badges"),
+var forumUserStats = (0, import_pg_core.pgTable)("forum_user_stats", {
+  id: (0, import_pg_core.varchar)("id").primaryKey().default(import_drizzle_orm3.sql`gen_random_uuid()`),
+  userId: (0, import_pg_core.varchar)("user_id").references(() => users2.id).notNull().unique(),
+  postCount: (0, import_pg_core.integer)("post_count").default(0),
+  topicCount: (0, import_pg_core.integer)("topic_count").default(0),
+  likeCount: (0, import_pg_core.integer)("like_count").default(0),
+  reputationScore: (0, import_pg_core.integer)("reputation_score").default(0),
+  badges: (0, import_pg_core.text)("badges"),
   // JSON array of earned badges
-  joinedAt: timestamp2("joined_at").defaultNow(),
-  lastActiveAt: timestamp2("last_active_at")
+  joinedAt: (0, import_pg_core.timestamp)("joined_at").defaultNow(),
+  lastActiveAt: (0, import_pg_core.timestamp)("last_active_at")
 });
-var insertForumCategorySchema = createInsertSchema2(forumCategories2).pick({
+var insertForumCategorySchema = (0, import_drizzle_zod2.createInsertSchema)(forumCategories2).pick({
   name: true,
   description: true,
   color: true,
@@ -3659,7 +3671,7 @@ var insertForumCategorySchema = createInsertSchema2(forumCategories2).pick({
   accessLevel: true,
   moderatorIds: true
 });
-var insertForumTopicSchema = createInsertSchema2(forumTopics2).pick({
+var insertForumTopicSchema = (0, import_drizzle_zod2.createInsertSchema)(forumTopics2).pick({
   categoryId: true,
   title: true,
   description: true,
@@ -3670,7 +3682,7 @@ var insertForumTopicSchema = createInsertSchema2(forumTopics2).pick({
   isAnnouncement: true,
   tags: true
 });
-var insertForumPostSchema = createInsertSchema2(forumPosts2).pick({
+var insertForumPostSchema = (0, import_drizzle_zod2.createInsertSchema)(forumPosts2).pick({
   topicId: true,
   categoryId: true,
   authorId: true,
@@ -3680,7 +3692,7 @@ var insertForumPostSchema = createInsertSchema2(forumPosts2).pick({
   parentPostId: true,
   attachments: true
 });
-var insertForumLikeSchema = createInsertSchema2(forumLikes2).pick({
+var insertForumLikeSchema = (0, import_drizzle_zod2.createInsertSchema)(forumLikes2).pick({
   postId: true,
   userId: true,
   reactionType: true
@@ -4028,24 +4040,24 @@ function registerUsersRoutes(app2) {
 }
 
 // server/services/upload.ts
-import multer from "multer";
-import path from "path";
-import { randomUUID as randomUUID3 } from "crypto";
-import fs from "fs/promises";
-var storage2 = multer.diskStorage({
+var import_multer = __toESM(require("multer"), 1);
+var import_path = __toESM(require("path"), 1);
+var import_crypto3 = require("crypto");
+var import_promises = __toESM(require("fs/promises"), 1);
+var storage2 = import_multer.default.diskStorage({
   destination: async (req, file, cb) => {
     const uploadDir = process.env.STORAGE_PATH || "server/public/uploads";
     try {
-      await fs.mkdir(uploadDir, { recursive: true });
+      await import_promises.default.mkdir(uploadDir, { recursive: true });
       cb(null, uploadDir);
     } catch (error) {
       cb(error, uploadDir);
     }
   },
   filename: (req, file, cb) => {
-    const uniqueSuffix = `${Date.now()}-${randomUUID3()}`;
-    const ext = path.extname(file.originalname);
-    const baseName = path.basename(file.originalname, ext);
+    const uniqueSuffix = `${Date.now()}-${(0, import_crypto3.randomUUID)()}`;
+    const ext = import_path.default.extname(file.originalname);
+    const baseName = import_path.default.basename(file.originalname, ext);
     const sanitizedName = baseName.replace(/[^a-zA-Z0-9]/g, "_");
     cb(null, `${sanitizedName}-${uniqueSuffix}${ext}`);
   }
@@ -4069,7 +4081,7 @@ var fileFilter = (req, file, cb) => {
     cb(new Error(`Type de fichier non autoris\xE9: ${file.mimetype}`));
   }
 };
-var upload = multer({
+var upload = (0, import_multer.default)({
   storage: storage2,
   fileFilter,
   limits: {
@@ -4082,14 +4094,14 @@ var upload = multer({
 var FileManager = class {
   static async deleteFile(filePath) {
     try {
-      await fs.unlink(filePath);
+      await import_promises.default.unlink(filePath);
     } catch (error) {
       console.error("Erreur lors de la suppression du fichier:", error);
     }
   }
   static async getFileInfo(filePath) {
     try {
-      const stats = await fs.stat(filePath);
+      const stats = await import_promises.default.stat(filePath);
       return { size: stats.size, exists: true };
     } catch (error) {
       return { size: 0, exists: false };
@@ -4123,7 +4135,7 @@ var handleMultipleUploads = upload.fields([
 ]);
 function processUploadedFile(file, userId) {
   return {
-    id: randomUUID3(),
+    id: (0, import_crypto3.randomUUID)(),
     originalName: file.originalname,
     fileName: file.filename,
     filePath: file.path,
@@ -4138,14 +4150,14 @@ function processUploadedFile(file, userId) {
 }
 
 // server/services/websocket.ts
-import { WebSocketServer, WebSocket } from "ws";
+var import_ws = require("ws");
 var WebSocketManager = class {
   wss;
   clients = /* @__PURE__ */ new Map();
   channels = /* @__PURE__ */ new Map();
   heartbeatInterval;
   constructor(server) {
-    this.wss = new WebSocketServer({
+    this.wss = new import_ws.WebSocketServer({
       server,
       path: "/ws"
     });
@@ -4269,7 +4281,7 @@ var WebSocketManager = class {
   }
   sendToClient(clientId, message) {
     const client = this.clients.get(clientId);
-    if (client && client.readyState === WebSocket.OPEN) {
+    if (client && client.readyState === import_ws.WebSocket.OPEN) {
       client.send(JSON.stringify(message));
     }
   }
@@ -5998,42 +6010,43 @@ async function registerRoutes(app2) {
   registerMessagingRoutes(app2);
   registerTrainingRoutes(app2);
   registerAdminRoutes(app2);
-  return createServer(app2);
+  return (0, import_http.createServer)(app2);
 }
 
 // server/vite.ts
-import express from "express";
-import fs2 from "fs";
-import path3 from "path";
-import { createServer as createViteServer, createLogger } from "vite";
+var import_express = __toESM(require("express"), 1);
+var import_fs = __toESM(require("fs"), 1);
+var import_path3 = __toESM(require("path"), 1);
+var import_vite2 = require("vite");
 
 // vite.config.ts
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import path2 from "path";
-import { fileURLToPath } from "url";
-import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
-var __dirname = path2.dirname(fileURLToPath(import.meta.url));
-var vite_config_default = defineConfig(async () => {
-  const plugins = [react()];
+var import_vite = require("vite");
+var import_plugin_react = __toESM(require("@vitejs/plugin-react"), 1);
+var import_path2 = __toESM(require("path"), 1);
+var import_url = require("url");
+var import_vite_plugin_runtime_error_modal = __toESM(require("@replit/vite-plugin-runtime-error-modal"), 1);
+var import_meta = {};
+var __dirname = import_path2.default.dirname((0, import_url.fileURLToPath)(import_meta.url));
+var vite_config_default = (0, import_vite.defineConfig)(async () => {
+  const plugins = [(0, import_plugin_react.default)()];
   if (process.env.NODE_ENV !== "production" && process.env.REPL_ID !== void 0) {
     const cartographer = await import("@replit/vite-plugin-cartographer").then(
       (m) => m.cartographer()
     );
-    plugins.push(runtimeErrorOverlay(), cartographer);
+    plugins.push((0, import_vite_plugin_runtime_error_modal.default)(), cartographer);
   }
   return {
     plugins,
     resolve: {
       alias: {
-        "@": path2.resolve(__dirname, "client", "src"),
-        "@shared": path2.resolve(__dirname, "shared"),
-        "@assets": path2.resolve(__dirname, "attached_assets")
+        "@": import_path2.default.resolve(__dirname, "client", "src"),
+        "@shared": import_path2.default.resolve(__dirname, "shared"),
+        "@assets": import_path2.default.resolve(__dirname, "attached_assets")
       }
     },
-    root: path2.resolve(__dirname, "client"),
+    root: import_path2.default.resolve(__dirname, "client"),
     build: {
-      outDir: path2.resolve(__dirname, "dist/public"),
+      outDir: import_path2.default.resolve(__dirname, "dist/public"),
       emptyOutDir: true
     },
     server: {
@@ -6046,10 +6059,11 @@ var vite_config_default = defineConfig(async () => {
 });
 
 // server/vite.ts
-import { nanoid } from "nanoid";
-import { fileURLToPath as fileURLToPath2 } from "url";
-var viteLogger = createLogger();
-var __dirname2 = path3.dirname(fileURLToPath2(import.meta.url));
+var import_nanoid = require("nanoid");
+var import_url2 = require("url");
+var import_meta2 = {};
+var viteLogger = (0, import_vite2.createLogger)();
+var __dirname2 = import_path3.default.dirname((0, import_url2.fileURLToPath)(import_meta2.url));
 function log(message, source = "express") {
   const formattedTime = (/* @__PURE__ */ new Date()).toLocaleTimeString("en-US", {
     hour: "numeric",
@@ -6065,7 +6079,7 @@ async function setupVite(app2, server) {
     hmr: { server },
     allowedHosts: true
   };
-  const vite = await createViteServer({
+  const vite = await (0, import_vite2.createServer)({
     ...vite_config_default,
     configFile: false,
     customLogger: {
@@ -6082,16 +6096,16 @@ async function setupVite(app2, server) {
   app2.use("*", async (req, res, next) => {
     const url = req.originalUrl;
     try {
-      const clientTemplate = path3.resolve(
+      const clientTemplate = import_path3.default.resolve(
         __dirname2,
         "..",
         "client",
         "index.html"
       );
-      let template = await fs2.promises.readFile(clientTemplate, "utf-8");
+      let template = await import_fs.default.promises.readFile(clientTemplate, "utf-8");
       template = template.replace(
         `src="/src/main.tsx"`,
-        `src="/src/main.tsx?v=${nanoid()}"`
+        `src="/src/main.tsx?v=${(0, import_nanoid.nanoid)()}"`
       );
       const page = await vite.transformIndexHtml(url, template);
       res.status(200).set({ "Content-Type": "text/html" }).end(page);
@@ -6102,22 +6116,22 @@ async function setupVite(app2, server) {
   });
 }
 function serveStatic(app2) {
-  const distPath = path3.resolve(__dirname2, "..", "dist", "public");
-  if (!fs2.existsSync(distPath)) {
+  const distPath = import_path3.default.resolve(__dirname2, "..", "dist", "public");
+  if (!import_fs.default.existsSync(distPath)) {
     throw new Error(
       `Could not find the build directory: ${distPath}, make sure to build the client first`
     );
   }
-  app2.use(express.static(distPath, { maxAge: "1y", immutable: true }));
+  app2.use(import_express.default.static(distPath, { maxAge: "1y", immutable: true }));
   app2.use("*", (_req, res) => {
     res.setHeader("Cache-Control", "no-cache");
-    res.sendFile(path3.resolve(distPath, "index.html"));
+    res.sendFile(import_path3.default.resolve(distPath, "index.html"));
   });
 }
 
 // server/middleware/security.ts
-import { rateLimit } from "express-rate-limit";
-import helmet from "helmet";
+var import_express_rate_limit = require("express-rate-limit");
+var import_helmet = __toESM(require("helmet"), 1);
 function configureSecurity(app2) {
   const isDev = process.env.NODE_ENV !== "production";
   const devCsp = {
@@ -6151,11 +6165,11 @@ function configureSecurity(app2) {
       upgradeInsecureRequests: []
     }
   };
-  app2.use(helmet({
+  app2.use((0, import_helmet.default)({
     contentSecurityPolicy: isDev ? devCsp : prodCsp,
     crossOriginEmbedderPolicy: false
   }));
-  const authLimiter = rateLimit({
+  const authLimiter = (0, import_express_rate_limit.rateLimit)({
     windowMs: 15 * 60 * 1e3,
     // 15 minutes
     max: 5,
@@ -6168,7 +6182,7 @@ function configureSecurity(app2) {
   });
   app2.use("/api/auth/login", authLimiter);
   app2.use("/api/auth/register", authLimiter);
-  const apiLimiter = rateLimit({
+  const apiLimiter = (0, import_express_rate_limit.rateLimit)({
     windowMs: 15 * 60 * 1e3,
     // 15 minutes
     max: 100,
@@ -6280,31 +6294,32 @@ async function runMigrations() {
 }
 
 // server/index.ts
-import compression from "compression";
-import path4 from "path";
-import { fileURLToPath as fileURLToPath3 } from "url";
-import fs3 from "fs/promises";
-import mysqlSession from "express-mysql-session";
-import connectPgSimple from "connect-pg-simple";
-var __dirname3 = path4.dirname(fileURLToPath3(import.meta.url));
-var app = express2();
+var import_compression = __toESM(require("compression"), 1);
+var import_path4 = __toESM(require("path"), 1);
+var import_url3 = require("url");
+var import_promises2 = __toESM(require("fs/promises"), 1);
+var import_express_mysql_session = __toESM(require("express-mysql-session"), 1);
+var import_connect_pg_simple = __toESM(require("connect-pg-simple"), 1);
+var import_meta3 = {};
+var __dirname3 = import_path4.default.dirname((0, import_url3.fileURLToPath)(import_meta3.url));
+var app = (0, import_express2.default)();
 var storagePath = process.env.STORAGE_PATH || "server/public/uploads";
-void fs3.mkdir(storagePath, { recursive: true }).catch(() => {
+void import_promises2.default.mkdir(storagePath, { recursive: true }).catch(() => {
 });
-app.use("/uploads", express2.static(storagePath));
+app.use("/uploads", import_express2.default.static(storagePath));
 if (process.env.NODE_ENV === "development" && process.env.REPL_ID) {
   app.set("trust proxy", 1);
 } else {
   app.set("trust proxy", false);
 }
 configureSecurity(app);
-app.use(compression());
-app.use(express2.json({ limit: "50mb" }));
-app.use(express2.urlencoded({ extended: false, limit: "50mb" }));
+app.use((0, import_compression.default)());
+app.use(import_express2.default.json({ limit: "50mb" }));
+app.use(import_express2.default.urlencoded({ extended: false, limit: "50mb" }));
 app.use(sanitizeInput);
 var sessionStore;
 if (process.env.MYSQL_HOST || process.env.MYSQL_USER || process.env.MYSQL_DATABASE) {
-  const MySQLStore = mysqlSession(session);
+  const MySQLStore = (0, import_express_mysql_session.default)(import_express_session.default);
   sessionStore = new MySQLStore({
     host: process.env.MYSQL_HOST || "localhost",
     port: parseInt(process.env.MYSQL_PORT || "3306", 10),
@@ -6315,14 +6330,14 @@ if (process.env.MYSQL_HOST || process.env.MYSQL_USER || process.env.MYSQL_DATABA
     charset: "utf8mb4_bin"
   });
 } else if (process.env.DATABASE_URL) {
-  const PGStore = connectPgSimple(session);
+  const PGStore = (0, import_connect_pg_simple.default)(import_express_session.default);
   sessionStore = new PGStore({
     conString: process.env.DATABASE_URL,
     tableName: "session",
     schemaName: "public"
   });
 }
-app.use(session({ ...getSessionConfig(), store: sessionStore }));
+app.use((0, import_express_session.default)({ ...getSessionConfig(), store: sessionStore }));
 app.use((req, res, next) => {
   const start = Date.now();
   const path5 = req.path;
@@ -6375,7 +6390,7 @@ app.get("/healthz", (_req, res) => {
     const reuseInfo = listenOptions.reusePort ? " with reusePort" : "";
     const computedStoreType = process.env.MYSQL_HOST || process.env.MYSQL_USER || process.env.MYSQL_DATABASE ? "mysql" : process.env.DATABASE_URL ? "postgres" : "memory";
     log(`serving on port ${port}${reuseInfo}`);
-    log(`uploads dir: ${path4.resolve(storagePath)}`, "uploads");
+    log(`uploads dir: ${import_path4.default.resolve(storagePath)}`, "uploads");
     log(`session store: ${computedStoreType}`, "session");
   });
 })();
