@@ -1,0 +1,139 @@
+{
+  "baseUrl": "http://localhost:5000",
+  "timestamp": "2025-08-13T21:40:58.986Z",
+  "results": [
+    {
+      "name": "auth.me_unauth",
+      "status": 401,
+      "ok": false,
+      "url": "http://localhost:5000/api/auth/me",
+      "json": {
+        "message": "Not authenticated"
+      },
+      "text": "{\"message\":\"Not authenticated\"}"
+    },
+    {
+      "name": "auth.login_admin",
+      "status": 401,
+      "ok": false,
+      "url": "http://localhost:5000/api/auth/login",
+      "json": {
+        "message": "Invalid credentials"
+      },
+      "text": "{\"message\":\"Invalid credentials\"}"
+    },
+    {
+      "name": "auth.me_auth",
+      "status": 401,
+      "ok": false,
+      "url": "http://localhost:5000/api/auth/me",
+      "json": {
+        "message": "Not authenticated"
+      },
+      "text": "{\"message\":\"Not authenticated\"}"
+    },
+    {
+      "name": "list/api/announcements",
+      "status": 200,
+      "ok": true,
+      "url": "http://localhost:5000/api/announcements",
+      "json": [
+        {
+          "id": "ann-1",
+          "title": "Nouvelle politique de télétravail",
+          "content": "À partir du 1er décembre, une nouvelle politique de télétravail hybride sera mise en place.",
+          "type": "important",
+          "authorId": "user-1",
+          "authorName": "Jean Dupont",
+          "imageUrl": null,
+          "icon": "📢",
+          "createdAt": "2025-08-13T19:11:44.986Z",
+          "isImportant": true
+        },
+        {
+          "id": "ann-2",
+          "title": "Soirée d'entreprise - 15 décembre",
+          "content": "Nous organisons notre soirée de fin d'année le vendredi 15 décembre.",
+          "type": "event",
+          "authorId": "user-2",
+          "authorName": "Marie Martin",
+          "imageUrl": null,
+          "icon": "🎉",
+          "createdAt": "2025-08-12T21:11:44.986Z",
+          "isImportant": false
+        }
+      ],
+      "text": "[{\"id\":\"ann-1\",\"title\":\"Nouvelle politique de télétravail\",\"content\":\"À partir du 1er décembre, une nouvelle politique de télétravail hybride sera mise en place.\",\"type\":\"important\",\"authorId\":\"user-1\",\"authorName\":\"Jean Dupont\",\"imageUrl\":null,\"icon\":\"📢\",\"createdAt\":\"2025-08-13T19:11:44.986Z\",\"isImportant\":true},{\"id\":\"ann-2\",\"title\":\"Soirée d'entreprise - 15 décembre\",\"content\":\"Nous organisons notre soirée de fin d'année le vendredi 15 décembre.\",\"type\":\"event\",\"authorId\":\"user-2\",\"authorNam…"
+    },
+    {
+      "name": "list/api/documents",
+      "status": 200,
+      "ok": true,
+      "url": "http://localhost:5000/api/documents",
+      "json": [
+        {
+          "id": "doc-1",
+          "title": "Règlement intérieur 2024",
+          "description": "Version mise à jour du règlement intérieur",
+          "category": "regulation",
+          "fileName": "reglement-interieur-2024.pdf",
+          "fileUrl": "/documents/reglement-interieur-2024.pdf",
+          "updatedAt": "2025-08-11T21:11:44.986Z",
+          "version": "2024.1"
+        }
+      ],
+      "text": "[{\"id\":\"doc-1\",\"title\":\"Règlement intérieur 2024\",\"description\":\"Version mise à jour du règlement intérieur\",\"category\":\"regulation\",\"fileName\":\"reglement-interieur-2024.pdf\",\"fileUrl\":\"/documents/reglement-interieur-2024.pdf\",\"updatedAt\":\"2025-08-11T21:11:44.986Z\",\"version\":\"2024.1\"}]"
+    },
+    {
+      "name": "list/api/events",
+      "status": 200,
+      "ok": true,
+      "url": "http://localhost:5000/api/events",
+      "json": [
+        {
+          "id": "event-1",
+          "title": "Réunion équipe marketing",
+          "description": "Point mensuel sur les campagnes",
+          "date": "2024-01-16T13:00:00.000Z",
+          "location": "Salle de conférence A",
+          "type": "meeting",
+          "createdAt": "2025-08-13T21:11:44.988Z",
+          "organizerId": "user-1"
+        }
+      ],
+      "text": "[{\"id\":\"event-1\",\"title\":\"Réunion équipe marketing\",\"description\":\"Point mensuel sur les campagnes\",\"date\":\"2024-01-16T13:00:00.000Z\",\"location\":\"Salle de conférence A\",\"type\":\"meeting\",\"createdAt\":\"2025-08-13T21:11:44.988Z\",\"organizerId\":\"user-1\"}]"
+    },
+    {
+      "name": "upload.success_pdf",
+      "status": 401,
+      "ok": false,
+      "url": "http://localhost:5000/api/upload",
+      "json": {
+        "message": "Authentication required"
+      },
+      "text": "{\"message\":\"Authentication required\"}",
+      "uploadedFileUrl": null
+    },
+    {
+      "name": "upload.invalid_mime",
+      "status": 401,
+      "ok": false,
+      "url": "http://localhost:5000/api/upload",
+      "json": {
+        "message": "Authentication required"
+      },
+      "text": "{\"message\":\"Authentication required\"}"
+    },
+    {
+      "name": "rate_limit.login_wrong_x6",
+      "status": 429,
+      "ok": false,
+      "url": "http://localhost:5000/api/auth/login",
+      "json": {
+        "error": "Too many authentication attempts. Please try again later."
+      },
+      "text": "{\"error\":\"Too many authentication attempts. Please try again later.\"}"
+    }
+  ],
+  "errors": []
+}

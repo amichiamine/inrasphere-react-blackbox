@@ -1,0 +1,42 @@
+# Exclude large and dev-only files from cPanel deployments
+
+# Node dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Build caches and artifacts (keep dist for runtime; build on server or upload prebuilt)
+**/.cache/
+**/.vite/
+**/.turbo/
+**/.esbuild/
+**/coverage/
+**/tmp/
+**/temp/
+
+# Tests and local configs
+**/__tests__/
+**/*.test.*
+*.local.*
+*.env.local
+.env.development
+.env.production
+.env.test
+
+# VCS and IDEs
+.git/
+.gitignore
+.gitattributes
+.vscode/
+.idea/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
